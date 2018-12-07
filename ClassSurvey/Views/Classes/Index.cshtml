@@ -9,61 +9,71 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Teacher.TeacherName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ClassName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ClassCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Semester)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NumberOfDegrees)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Teacher.TeacherName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ClassName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ClassCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Semester)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumberOfDegrees)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<div class="content">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Số thứ tự
+                </th>
+                <th>
+                    Mã lớp
+                </th>
+                <th>
+                    Tên lớp
+                </th>
+                <th>
+                    Số tín chỉ
+                </th>
+                <th>
+                    Học kỳ
+                </th>
+                <th></th>
+            </tr>
+        </thead> 
 
-</table>
+        <tbody>
+                @{ int i = 0; }
+                @foreach (var item in Model)
+                {
+                    i = i + 1;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClassCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClassName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumberOfDegrees)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Semester)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Danh sách học sinh", "ShowStudentsInClass", new { id = item.Id }) |
+                            @Html.ActionLink("Kết quả đánh giá", "ShowSurveyResultByStudent", new { id = item.Id }) |
+                            @Html.ActionLink("Xóa", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Nhập dữ liệu từ File Excel
+    </div>
+    <form action="/Classes/ImportClassFromExcel" method="post" enctype="multipart/form-data"
+          style="padding: 15px">
+        <input type="file" name="file" id="file" />
+        <br />
+        <button type="submit" value="Import" class="btn btn-success" id="import-data" />Import Data</button>
+    </form>
+
+</div>

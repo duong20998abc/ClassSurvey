@@ -12,171 +12,204 @@ using OfficeOpenXml;
 
 namespace ClassSurvey.Controllers
 {
-    public class ClassesController : Controller
-    {
-        private ClassSurveyDbContext db = new ClassSurveyDbContext();
+	public class ClassesController : Controller
+	{
+		private ClassSurveyDbContext db = new ClassSurveyDbContext();
 
-        // GET: Classes
-        public ActionResult Index()
-        {
-            return View(db.Classes.ToList());
-        }
+		// GET: Classes
+		public ActionResult Index()
+		{
+			//lay ra danh sach lop hoc
+			return View(db.Classes.ToList());
+		}
 
-        // GET: Classes/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Class @class = db.Classes.Find(id);
-            if (@class == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@class);
-        }
+		// GET: Classes/Details/5
+		public ActionResult Details(int? id)
+		{
+			//neu id null
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			//lay ra class co Id = id
+			Class @class = db.Classes.Find(id);
 
-        // GET: Classes/Create
-        public ActionResult Create()
-        {
-            ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "TeacherName");
-            return View();
-        }
-
-        // POST: Classes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ClassName,ClassCode,Semester,NumberOfDegrees,Status,IsDeleted")] Class @class)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Classes.Add(@class);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(@class);
-        }
-
-        // GET: Classes/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Class @class = db.Classes.Find(id);
-            if (@class == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(@class);
-        }
-
-        // POST: Classes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ClassName,ClassCode,Semester,NumberOfDegrees,Status,IsDeleted")] Class @class)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(@class).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-           
-            return View(@class);
-        }
-
-        // GET: Classes/Delete/5
-		//phuong thuc HttpGet
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Class @class = db.Classes.Find(id);
-            if (@class == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@class);
-        }
-
-		// Phuong thuc HttpPost
-        // POST: Classes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-			//tim lop co Id = id
-            Class @class = db.Classes.Find(id);
-			if(@class == null)
+			//neu khong tim thay class co id
+			if (@class == null)
 			{
 				return HttpNotFound();
 			}
-            db.Classes.Remove(@class);
-			IEnumerable<StudentClass> listStudentsInClass = db.StudentClasses.Where(x => x.ClassId == id).ToList();
-			foreach(var item in listStudentsInClass)
+			return View(@class);
+		}
+
+		// GET: Classes/Create
+		public ActionResult Create()
+		{
+			ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "TeacherName");
+			return View();
+		}
+
+		//tao moi 1 class
+		// POST: Classes/Create
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Create([Bind(Include = "Id,ClassName,ClassCode,Semester,NumberOfDegrees,Status,IsDeleted")] Class @class)
+		{
+			//ModelState.IsValid cho biet rang khong co loi model nao duoc add vao ModelState
+			if (ModelState.IsValid)
 			{
+				//them moi vao database
+				db.Classes.Add(@class);
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+
+			return View(@class);
+		}
+
+		// GET: Classes/Edit/5
+		public ActionResult Edit(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Class @class = db.Classes.Find(id);
+			if (@class == null)
+			{
+				return HttpNotFound();
+			}
+
+			return View(@class);
+		}
+
+		// POST: Classes/Edit/5
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit([Bind(Include = "Id,ClassName,ClassCode,Semester,NumberOfDegrees,Status,IsDeleted")] Class @class)
+		{
+			if (ModelState.IsValid)
+			{
+				db.Entry(@class).State = EntityState.Modified;
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+
+			return View(@class);
+		}
+
+		// GET: Classes/Delete/5
+		//phuong thuc HttpGet
+		public ActionResult Delete(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Class @class = db.Classes.Find(id);
+			if (@class == null)
+			{
+				return HttpNotFound();
+			}
+			return View(@class);
+		}
+
+		// Phuong thuc HttpPost
+		// POST: Classes/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public ActionResult DeleteConfirmed(int id)
+		{
+			//tim lop co Id = id
+			Class @class = db.Classes.Find(id);
+
+			//khong tim thay class
+			if (@class == null)
+			{
+				return HttpNotFound();
+			}
+			//xoa lop
+			db.Classes.Remove(@class);
+
+			// khi xoa 1 lop hoc phan thi phai xoa toan bo sinh vien trong lop va khao sat ma cac sinh vien da lam
+			//lay ra danh sach sinh vien trong lop
+			IEnumerable<StudentClass> listStudentsInClass = db.StudentClasses.Where(x => x.ClassId == id).ToList();
+			foreach (var item in listStudentsInClass)
+			{
+				//xoa survey ma sinh vien da lam
 				db.Surveys.RemoveRange(item.Surveys);
 			}
 
+			//xoa danh sach sinh vien
 			db.StudentClasses.RemoveRange(listStudentsInClass);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+			db.SaveChanges();
+			return RedirectToAction("Index");
+		}
 
+		//them du lieu tu file excel
 		[HttpPost]
-		public ActionResult ImportClassFromExcel (HttpPostedFileBase file)
+		public ActionResult ImportClassFromExcel(HttpPostedFileBase file)
 		{
+			ViewBag.message = "Import không thành công";
 			int count = 0;
 			int successNumber = 0;
 			try
 			{
 				var excelPackage = new ExcelPackage(file.InputStream);
-				if(ImportData(out count, out successNumber, excelPackage))
+				if (ImportData(out count, out successNumber, excelPackage))
 				{
-					ViewBag.Message = "Xin chúc mừng. Bạn đã import lớp môn học thành công";
-					ViewBag.Count = successNumber.ToString() + "sinh viên đã được thêm vào";
-					ViewBag.CountFail = (count - successNumber).ToString() + "sinh viên chưa được thêm";
+					//thong bao thanh cong
+					ViewData["message"] = "Xin chúc mừng. Bạn đã import lớp môn học thành công";
+					//dem so sinh vien duoc them vao
+					ViewData["count"] = successNumber.ToString() + "sinh viên đã được thêm vào";
+					//dem so sinh vien chua duoc them vao
+					ViewData["countFail"] = (count - successNumber).ToString() + "sinh viên chưa được thêm";
 				}
 			}
 			catch (Exception)
 			{
-				throw;
+				return RedirectToAction("Index");
 			}
-			return View();
+			return RedirectToAction("Index");
 		}
 
-		public bool ImportData (out int count, out int successNumber, ExcelPackage excel )
+		//ham bool them data, phuc vu cho ham import o tren
+		public bool ImportData(out int count, out int successNumber, ExcelPackage excel)
 		{
 			count = 0;
 			successNumber = 0;
 			var result = false;
 			try
-			{	
+			{
+				//qua trinh them danh sach sinh vien, bat dau tu cot 1 va dong 12
+				int startColumn = 1;
+				int startRow = 12;
 				ExcelWorksheet worksheet = excel.Workbook.Worksheets[1];
 				ClassSurveyDbContext db = new ClassSurveyDbContext();
+				object data = null;
+				//ten giao vien nam o C7
 				object teacherName = worksheet.Cells[7, 3].Value;
+				//ten lop nam o C10
 				object className = worksheet.Cells[10, 3].Value;
+				//ma lop nam o C9
 				object classCode = worksheet.Cells[9, 3].Value;
+				//so luong tin chi nam o F9
 				object numberOfDegrees = worksheet.Cells[9, 6].Value;
 
-				if(!db.Classes.Any(x => x.ClassCode.ToLower().Equals(classCode.ToString().ToLower())))
+				//them du lieu vao DB
+				if (!db.Classes.Any(x => x.ClassCode.ToLower().Equals(classCode.ToString().ToLower())))
 				{
 					Class @class = new Class();
 					@class.ClassName = className.ToString();
 					@class.ClassCode = classCode.ToString();
 					@class.Semester = 1;
 					@class.NumberOfDegrees = int.Parse(numberOfDegrees.ToString());
+					db.Classes.Add(@class);
+					db.SaveChanges();
 
 					//Ham max la de lay ra id gan nhat, nghia la class id vua tao o tren
 					int classId = db.Classes.Max(c => c.Id);
@@ -184,24 +217,29 @@ namespace ClassSurvey.Controllers
 					int teacherId = db.Teachers.FirstOrDefault(t => t.TeacherName.ToLower()
 					.Equals(teacherName.ToString().ToLower())).Id;
 
-					int startColumn = 1;
-					int startRow = 12;
-					object data = null;
 					do
 					{
 						data = worksheet.Cells[startRow, startColumn].Value;
-						object studentName = worksheet.Cells[startRow, startColumn + 2];
-						object studentCode = worksheet.Cells[startRow, startColumn + 1];
-						object classByGrade = worksheet.Cells[startRow, startColumn + 4];
-
-						if(data != null)
+						//ten hoc sinh
+						object studentName = worksheet.Cells[startRow, startColumn + 2].Value;
+						//ma hoc sinh
+						object studentCode = worksheet.Cells[startRow, startColumn + 1].Value;
+						//lop theo khoa
+						object classByGrade = worksheet.Cells[startRow, startColumn + 4].Value;
+						string username = worksheet.Cells[startRow, startColumn + 1].Value.ToString();
+						startRow++;
+						if (data != null)
 						{
 							count++;
-							Student student = db.Students.FirstOrDefault(s => s.StudentCode.Trim()
-							.Equals(studentCode.ToString().Trim()));
-							if(student.Username == null)
+							Student student = db.Students.FirstOrDefault(s => s.Username.Trim()
+							.Equals(username.Trim()));
+							if(student == null)
 							{
-								student.Username = student.StudentCode;
+								continue;
+							}
+							if (student.StudentCode == null)
+							{
+								student.StudentCode = username;
 							}
 
 							StudentClass studentClass = new StudentClass();
@@ -211,7 +249,7 @@ namespace ClassSurvey.Controllers
 							db.StudentClasses.Add(studentClass);
 							db.SaveChanges();
 							successNumber++;
-							return true;
+							result = true;
 						}
 
 					} while (data != null);
@@ -220,20 +258,21 @@ namespace ClassSurvey.Controllers
 			catch (Exception)
 			{
 
-				throw;
 			}
 
 			return result;
 		}
 
+		//In ra ket qua cua cuoc khao sat
 		public ActionResult ShowSurveyResult(int? id)
 		{
-			if(id == null)
+			if (id == null)
 			{
 				return HttpNotFound();
 			}
+			//find ra class co Id = id
 			Class @class = db.Classes.FirstOrDefault(c => c.Id == id);
-			if(@class == null)
+			if (@class == null)
 			{
 				return HttpNotFound();
 			}
@@ -253,19 +292,71 @@ namespace ClassSurvey.Controllers
 				.ToList().Count();
 
 			//khong co sinh vien duoc tim thay
-			if(student == null)
+			if (student == null)
 			{
 				return HttpNotFound();
 			}
 
 			/*tinh diem danh gia trung binh qua cac cuoc khao sat cua sinh vien
 			doi voi cac cau hoi trong bang khao sat*/
-			
+
 			ViewBag.Average = db.Surveys.Where(s => listStudentId.Any(x => x == s.StudentClassId))
 				.GroupBy(x => x.SurveyQuestionId)
 				.Select(x => x.Average(k => k.Result)).ToList();
 
+			//lay ra danh sach cau hoi khao sat
+			ViewBag.SurveyQuestion = db.SurveyQuestions.Select(sc => sc.Content).ToList();
+
+			//lay ra tong so cau hoi trong bai khao sat
+			ViewBag.CountQuestion = db.SurveyQuestions.ToList().Count();
 			return View(student);
+		}
+
+		//lay ra danh sach sinh vien trong 1 lop hoc phan
+		public ActionResult ShowStudentsInClass(int? id)
+		{
+			if (id == null)
+			{
+				return HttpNotFound();
+			}
+
+			//lay ra danh sach hoc sinh trong lop hoc phan co ID = id
+			IEnumerable<StudentClass> listStudents = db.StudentClasses.Where(s => s.ClassId == id).ToList();
+			//khong tim thay
+			if (listStudents == null)
+			{
+				return HttpNotFound();
+			}
+			return View(listStudents);
+		}
+
+		//Hien thi ket qua survey ung voi moi 1 sinh vien
+		public ActionResult ShowSurveyResultByStudent(int? id)
+		{
+			if (id == null)
+			{
+				return HttpNotFound();
+			}
+			//dem so sinh vien da lam khao sat
+			ViewBag.CountStudentsHaveSurvey = db.Surveys.Where(s => s.StudentClassId == id).ToList().Count();
+			if (ViewBag.CountStudentsHaveSurvey == 0)
+			{
+				ViewBag.Message = "Chưa có sinh viên nào làm khảo sát đối với môn học";
+				return View();
+			}
+
+			//lay ra diem ma sinh vien da danh gia
+			ViewBag.Points = db.Surveys.Where(s => s.StudentClassId == id).Select(s => s.Result).ToList();
+			if (ViewBag.Points == null)
+			{
+				return HttpNotFound();
+			}
+			//lay ra danh sach cau hoi khao sat
+			ViewBag.SurveyQuestion = db.SurveyQuestions.Select(sc => sc.Content).ToList();
+
+			//lay ra tong so cau hoi trong bai khao sat
+			ViewBag.CountQuestion = db.SurveyQuestions.ToList().Count();
+			return View();
 		}
 
 		protected override void Dispose(bool disposing)

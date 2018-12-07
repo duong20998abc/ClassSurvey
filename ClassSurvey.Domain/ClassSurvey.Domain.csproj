@@ -49,13 +49,15 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
+    <Reference Include="EPPlus, Version=4.5.2.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.2.1\lib\net40\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="OfficeOpenXml.Extends, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OfficeOpenXml.Extends.1.0.6.0\lib\net40\OfficeOpenXml.Extends.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -91,10 +93,16 @@
     <Compile Include="Entities\Survey.cs" />
     <Compile Include="Entities\SurveyQuestion.cs" />
     <Compile Include="Entities\Teacher.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserRole.cs" />
     <Compile Include="Enum\CommonStatus.cs" />
-    <Compile Include="Migrations\201811200944224_UpdateDatabase.cs" />
-    <Compile Include="Migrations\201811200944224_UpdateDatabase.Designer.cs">
-      <DependentUpon>201811200944224_UpdateDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201812051205586_AddUserAndUserRoleToDb.cs" />
+    <Compile Include="Migrations\201812051205586_AddUserAndUserRoleToDb.Designer.cs">
+      <DependentUpon>201812051205586_AddUserAndUserRoleToDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812060332160_AddNullToTeacherNameInTeacher.cs" />
+    <Compile Include="Migrations\201812060332160_AddNullToTeacherNameInTeacher.Designer.cs">
+      <DependentUpon>201812060332160_AddNullToTeacherNameInTeacher.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,8 +117,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811200944224_UpdateDatabase.resx">
-      <DependentUpon>201811200944224_UpdateDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201812051205586_AddUserAndUserRoleToDb.resx">
+      <DependentUpon>201812051205586_AddUserAndUserRoleToDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812060332160_AddNullToTeacherNameInTeacher.resx">
+      <DependentUpon>201812060332160_AddNullToTeacherNameInTeacher.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

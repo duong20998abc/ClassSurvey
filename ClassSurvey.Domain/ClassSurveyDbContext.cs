@@ -21,5 +21,7 @@ namespace ClassSurvey.Domain
 		public DbSet<Teacher> Teachers { get; set; }
 		public DbSet<Survey> Surveys { get; set; }
 		public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
+		public DbSet<User> Users { get; set; }
+		public DbSet<UserRole> UserRoles { get; set; }
 	}
 }

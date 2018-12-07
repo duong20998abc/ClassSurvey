@@ -14,11 +14,9 @@ namespace ClassSurvey.Domain.Entities
 			Office = "404E3-UET-VNU";
 		}
 		
-		[Required]
 		[StringLength(256)]
 		public string TeacherName { get; set; }
 
-		[Required]
 		[StringLength(100)]
 		public string Email { get; set; }
 

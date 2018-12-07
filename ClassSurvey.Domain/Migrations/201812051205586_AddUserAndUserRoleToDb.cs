@@ -3,7 +3,7 @@ namespace ClassSurvey.Domain.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class UpdateDatabase : DbMigration
+    public partial class AddUserAndUserRoleToDb : DbMigration
     {
         public override void Up()
         {
@@ -114,6 +114,36 @@ namespace ClassSurvey.Domain.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
+            CreateTable(
+                "dbo.UserRoles",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Position = c.String(),
+                        Area = c.String(),
+                        Controller = c.String(),
+                        Action = c.String(),
+                        Status = c.Int(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Users",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Username = c.String(nullable: false, maxLength: 256),
+                        Password = c.String(nullable: false),
+                        Position = c.String(nullable: false),
+                        StudentId = c.Int(),
+                        TeacherId = c.Int(),
+                        AdminId = c.Int(),
+                        Status = c.Int(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
@@ -128,6 +158,8 @@ namespace ClassSurvey.Domain.Migrations
             DropIndex("dbo.StudentClasses", new[] { "TeacherId" });
             DropIndex("dbo.StudentClasses", new[] { "ClassId" });
             DropIndex("dbo.StudentClasses", new[] { "StudentId" });
+            DropTable("dbo.Users");
+            DropTable("dbo.UserRoles");
             DropTable("dbo.Teachers");
             DropTable("dbo.SurveyQuestions");
             DropTable("dbo.Surveys");
