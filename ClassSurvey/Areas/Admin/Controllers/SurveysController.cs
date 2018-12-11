@@ -21,21 +21,6 @@ namespace ClassSurvey.Controllers
             return View(db.SurveyQuestions.ToList());
         }
 
-        // GET: Surveys/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Survey survey = db.Surveys.Find(id);
-            if (survey == null)
-            {
-                return HttpNotFound();
-            }
-            return View(survey);
-        }
-
         // GET: Surveys/Create
         //public ActionResult Create()
         //{

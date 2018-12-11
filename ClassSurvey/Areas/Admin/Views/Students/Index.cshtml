@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ClassSurvey.Domain.Entities.Student>
+
+@{
+    ViewBag.Title = "Danh sách sinh viên";
+}
+
+<h2>Danh sách sinh viên</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới sinh viên", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClassByGrade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClassByGrade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDeleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Nhập dữ liệu từ File Excel
+    </div>
+    <form action="/Students/ImportStudentFromExcel" method="post" enctype="multipart/form-data"
+          style="padding: 15px">
+        <input type="file" name="fileUpload" />
+        <br />
+        <button type="submit" value="Import" class="btn btn-success" />Import Data</button>
+    </form>
+
+</div>

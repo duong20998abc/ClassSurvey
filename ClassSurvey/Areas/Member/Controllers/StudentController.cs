@@ -97,7 +97,7 @@ namespace ClassSurvey.Areas.Member.Controllers
 
 		//ham xu ly khi sinh vien post dap an cho bai khao sat
 		[HttpPost]
-		public ActionResult SubmitSurvey(FormCollection form, int classId, int studentId)
+		public ActionResult DoSurvey(FormCollection form, int classId, int studentId)
 		{
 			//tong so cau hoi trong bai khao sat
 			ViewBag.CountQuestion = db.SurveyQuestions.ToList().Count();

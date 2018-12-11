@@ -161,20 +161,24 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ClassesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StudentsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SurveysController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TeachersController.cs" />
+    <Compile Include="Areas\Authentication\AuthenticationAreaRegistration.cs" />
+    <Compile Include="Areas\Authentication\Controllers\AuthenticationController.cs" />
     <Compile Include="Areas\Member\Controllers\StudentController.cs" />
     <Compile Include="Areas\Member\Controllers\TeacherController.cs" />
     <Compile Include="Areas\Member\MemberAreaRegistration.cs" />
-    <Compile Include="Controllers\ClassesController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\StudentsController.cs" />
-    <Compile Include="Controllers\SurveysController.cs" />
-    <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Authentication\Contents\Images\404.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -193,6 +197,36 @@
     <Content Include="Areas\Member\Views\Student\ShowStudentInfo.cshtml" />
     <Content Include="Areas\Member\Views\Student\ShowListClass.cshtml" />
     <Content Include="Areas\Member\Views\Student\DoSurvey.cshtml" />
+    <Content Include="Areas\Authentication\Views\web.config" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Teachers\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Teachers\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Teachers\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Teachers\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Teachers\ImportTeacherFromExcel.cshtml" />
+    <Content Include="Areas\Admin\Views\Teachers\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Surveys\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Surveys\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Surveys\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Surveys\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Students\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Students\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Students\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Students\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Students\ImportStudentFromExcel.cshtml" />
+    <Content Include="Areas\Admin\Views\Students\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\About.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Contact.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Classes\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Classes\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Classes\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Classes\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Classes\ShowStudentsInClass.cshtml" />
+    <Content Include="Areas\Authentication\Views\Authentication\NotAuthorized.cshtml" />
+    <Content Include="Areas\Authentication\Views\Authentication\Page404.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -231,24 +265,25 @@
     <Content Include="Views\Classes\Create.cshtml" />
     <Content Include="Views\Classes\Delete.cshtml" />
     <Content Include="Views\Classes\Details.cshtml" />
-    <Content Include="Views\Classes\Edit.cshtml" />
     <Content Include="Views\Classes\Index.cshtml" />
     <Content Include="Views\Students\ImportStudentFromExcel.cshtml" />
     <Content Include="Views\Teachers\ImportTeacherFromExcel.cshtml" />
     <Content Include="Views\Surveys\Create.cshtml" />
     <Content Include="Views\Surveys\Delete.cshtml" />
-    <Content Include="Views\Surveys\Details.cshtml" />
     <Content Include="Views\Surveys\Edit.cshtml" />
     <Content Include="Views\Surveys\Index.cshtml" />
     <Content Include="Views\Classes\ShowStudentsInClass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Authentication\Contents\CSS\" />
+    <Folder Include="Areas\Authentication\Contents\JS\" />
+    <Folder Include="Areas\Authentication\Models\" />
+    <Folder Include="Areas\Authentication\Views\Shared\" />
     <Folder Include="Areas\Member\Models\" />
     <Folder Include="Areas\Member\Views\Shared\" />
     <Folder Include="Areas\Member\Views\Teacher\" />
-    <Folder Include="Controllers\Student\" />
-    <Folder Include="Controllers\Teacher\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
