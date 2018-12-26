@@ -6,12 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ClassSurvey.Authorization;
 using ClassSurvey.Domain;
 using ClassSurvey.Domain.Entities;
 using OfficeOpenXml;
 
-namespace ClassSurvey.Controllers
+namespace ClassSurvey.Areas.Admin.Controllers
 {
+	[AuthorizeBusiness]
     public class StudentsController : Controller
     {
         private ClassSurveyDbContext db = new ClassSurveyDbContext();
@@ -49,14 +51,14 @@ namespace ClassSurvey.Controllers
 			//khong ton tai id => tra ve Bad request
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             Student student = db.Students.Find(id);
 			//Khong tim thay sinh vien co Id => HttpNotFound
             if (student == null)
             {
-                return HttpNotFound();
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             return View(student);
         }
 
@@ -82,6 +84,17 @@ namespace ClassSurvey.Controllers
             {
                 db.Students.Add(student);
                 db.SaveChanges();
+				//lay ra id cua student vua tao
+				int id = db.Students.Max(x => x.Id);
+				User user = new User()
+				{
+					Username = student.Username,
+					Password = student.Password,
+					Position = "Student",
+					StudentId = id
+				};
+				db.Users.Add(user);
+				db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -92,16 +105,13 @@ namespace ClassSurvey.Controllers
 		[HttpPost]
 		public ActionResult ImportStudentFromExcel(HttpPostedFileBase fileUpload)
 		{
-			ViewBag.message = "Import không thành công";
 			int count = 0;
 			var package = new ExcelPackage(fileUpload.InputStream);
 			if (ImportData(out count, package))
 			{
 				ViewBag.message = "Bạn đã import dữ liệu sinh viên thành công";
 			}
-
-			ViewBag.countStudent = count;
-			return View();
+			return RedirectToAction("Index","Students", new { area = "Admin"});
 		}
 
 		public bool ImportData(out int count, ExcelPackage package)
@@ -163,6 +173,17 @@ namespace ClassSurvey.Controllers
 					student.ClassByGrade = classbygrade;
 					db.Students.Add(student);
 					db.SaveChanges();
+
+					int id = db.Students.Max(x => x.Id);
+					User user = new User()
+					{
+						Username = username,
+						Password = password,
+						Position = "Student",
+						StudentId = id
+					};
+					db.Users.Add(user);
+					db.SaveChanges();
 					result = true;
 				}
 			}
@@ -179,13 +200,13 @@ namespace ClassSurvey.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             Student student = db.Students.Find(id);
             if (student == null)
             {
-                return HttpNotFound();
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             return View(student);
         }
 
@@ -210,8 +231,8 @@ namespace ClassSurvey.Controllers
 			//khong tim thay id
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
 
 			//tim Student theo id
             Student student = db.Students.Find(id);
@@ -219,8 +240,8 @@ namespace ClassSurvey.Controllers
 			//khong tim thay student
             if (student == null)
             {
-                return HttpNotFound();
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             return View(student);
         }
 
@@ -235,8 +256,10 @@ namespace ClassSurvey.Controllers
 			//neu khong tim thay student
 			if(student == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
+
+			User user = db.Users.FirstOrDefault(x => x.StudentId == id);
 
 			//lay ra danh sach hoc sinh hoc trong lop
 			IEnumerable<StudentClass> listStudentsInClass = db.StudentClasses.Where(s => s.StudentId == id);
@@ -260,6 +283,7 @@ namespace ClassSurvey.Controllers
 
 			//xoa hoc sinh
             db.Students.Remove(student);
+			db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

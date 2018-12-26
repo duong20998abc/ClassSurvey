@@ -1,4 +1,5 @@
-﻿using ClassSurvey.Domain;
+﻿using ClassSurvey.Authorization;
+using ClassSurvey.Domain;
 using ClassSurvey.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ClassSurvey.Areas.Member.Controllers
 {
+	[AuthorizeBusiness]
 	public class TeacherController : Controller
 	{
 		private ClassSurveyDbContext db = new ClassSurveyDbContext();
@@ -21,10 +23,10 @@ namespace ClassSurvey.Areas.Member.Controllers
 			{
 				//Dem so luong sinh vien giao vien dang day
 				ViewBag.CountStudents = db.Teachers.FirstOrDefault(t => t.Id == user.TeacherId)
-					.StudentClasses.Count();
+				.StudentClasses.Count();
 				//Dem so lop giao vien day
 				ViewBag.CountClasses = db.Teachers.FirstOrDefault(t => t.Id == user.TeacherId)
-					.StudentClasses.GroupBy(sc => sc.TeacherId).Count();
+				.StudentClasses.GroupBy(sc => sc.TeacherId).Count();
 				return View();
 			}
 			return View();

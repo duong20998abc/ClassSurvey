@@ -2,41 +2,43 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+
+    <link href="~/Areas/Admin/Contents/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Contents/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Contents/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Contents/dist/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Contents/dist/css/skins/skin-blue.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Contents/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        @Html.Partial("_HeaderPartialView")
+        @Html.Partial("_AsideMenuPartialView")
+        <div class="body-content" style="height: 78.35%">
+            @RenderBody()
+            <hr />
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Areas/Admin/Contents/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Areas/Admin/Contents/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Areas/Admin/Contents/dist/js/adminlte.min.js"></script>
+    <script src="~/Areas/Admin/Contents/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Areas/Admin/Contents/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Areas/Admin/Contents/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Areas/Admin/Contents/bower_components/fastclick/lib/fastclick.js"></script>
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
 </body>
 </html>

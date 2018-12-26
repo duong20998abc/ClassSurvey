@@ -1,8 +1,89 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@model ClassSurvey.Domain.Entities.Student
+
+@{ 
+    ViewBag.Title = "Trang chủ sinh viên";
+    Layout = "~/Areas/Member/Views/Shared/_LayoutMember.cshtml";
 }
 
-<h2>Index</h2>
-
+<ul class="list-group">
+    <li class="list-group-item p-0 pb-3 border-0">
+        <button class="btn btn-dark btn-block rounded-0" data-toggle="collapse" data-target="#HK11819">
+            Học kỳ I 2018-2019
+        </button>
+        <div id="HK11819" class="collapse show" aria-expanded="true">
+            <table class="table table-hover table-striped table-bordered m-0">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Mã môn học</th>
+                        <th scope="col">Tên môn học</th>
+                        <th scope="col">Hạn nộp</th>
+                        <th scope="col">Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>INT2201</td>
+                        <td><a href="../html/survey.html">Toán cao cấp</a></td>
+                        <td>14/11/2018, 23:55</td>
+                        <td>Chưa nộp</td>
+                    </tr>
+                    <tr>
+                        <td>INT2202</td>
+                        <td><a href="#">Toán cao cấp</a></td>
+                        <td>14/11/2018, 23:55</td>
+                        <td>Chưa nộp</td>
+                    </tr>
+                    <tr>
+                        <td>INT2203</td>
+                        <td><a href="#">Toán cao cấp</a></td>
+                        <td>14/11/2018, 23:55</td>
+                        <td>Chưa nộp</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </li>
+    <li class="list-group-item p-0 pb-3 border-0">
+        <button class="btn btn-dark btn-block rounded-0" data-toggle="collapse" data-target="#HK21819">
+            Học kỳ II 2018-2019
+        </button>
+        <div id="HK21819" class="collapse" aria-expanded="false">
+            <table class="table table-hover table-striped table-bordered m-0">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Mã môn học</th>
+                        <th scope="col">Tên môn học</th>
+                        <th scope="col">Hạn nộp</th>
+                        <th scope="col">Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>INT2201</td>
+                        <td><a href="#">Toán cao cấp</a></td>
+                        <td>14/11/2018, 23:55</td>
+                        <td>Chưa nộp</td>
+                    </tr>
+                    <tr>
+                        <td>INT2202</td>
+                        <td><a href="#">Toán cao cấp</a></td>
+                        <td>14/11/2018, 23:55</td>
+                        <td>Chưa nộp</td>
+                    </tr>
+                    <tr>
+                        <td>INT2203</td>
+                        <td><a href="#">Toán cao cấp</a></td>
+                        <td>14/11/2018, 23:55</td>
+                        <td>Chưa nộp</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </li>
+</ul>
+    @*<footer id="page-footer">
+        <div class="text-light bg-dark row">
+            <p class="pt-3 pl-3">2018 Trường Đại học Công nghệ, ĐHQGHN</p>
+        </div>
+    </footer>
+    </div>*@

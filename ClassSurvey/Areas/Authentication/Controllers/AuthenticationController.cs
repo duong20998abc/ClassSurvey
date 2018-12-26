@@ -12,54 +12,57 @@ namespace ClassSurvey.Areas.Authentication.Controllers
     {
 		private ClassSurveyDbContext db = new ClassSurveyDbContext();
         // GET: Authentication/Authentication
-        public ActionResult Index()
+
+        public ActionResult Home()
 		{
-			//lay ra user thong qua session
+			//get user by session
 			User user = Session["User"] as User;
-			//neu ton tai user
+			//if exist user
 			if(user != null)
 			{
-				//neu user la teacher
+				//teacher
 				if(user.Position.Equals("Teacher"))
 				{
-					//lay ra teacher theo id
+					//get teacher by id
+					//if id of teacher equals teacherId of user
 					Teacher teacher = db.Teachers.FirstOrDefault(t => t.Id == user.TeacherId);
-					//luu ten teacher vao session
+					//add teacher to session
 					Session["Username"] = teacher.TeacherName.ToUpper();
-					//redirect den trang cua giao vien
+					//redirect to teacher page
 					//actionName = Index, controllerName = Teacher, routeValue = Area Member
 					return RedirectToAction("Index", "Teacher", new { area = "Member" });
 				}
+				//student
 				else if (user.Position.Equals("Student"))
 				{
-					//lay ra student theo id
+					//get student by id
 					Student student = db.Students.FirstOrDefault(s => s.Id == user.StudentId);
-					//luu ten teacher vao session
+					//add student to session
 					Session["Username"] = student.StudentName.ToUpper();
-					//redirect den trang cua sinh vien
+					//redirect to student page
 					//actionName = Index, controllerName = Student, routeValue = Area Member
 					return RedirectToAction("Index", "Student", new { area = "Member" });
 				}else
 				{
-					//luu ten admin vao session
+					//add admin to session
 					Session["Username"] = "Admin";
-					//redirect den trang cua admin
+					//redirect to admin index page
 					//actionName = Index, controllerName = Home, routeValue = Area Admin
 					return RedirectToAction("Index", "Home", new { area = "Admin" });
 				}
 			}
-			return View("Index",new {area = "Authentication" });
+			return View("~/Areas/Authentication/Views/Authentication/Home.cshtml");
 		}
 
 		[HttpPost]
-		public ActionResult LoginFromForm(FormCollection form)
+		public ActionResult Home(FormCollection form)
 		{
 			//lay ra username nhap vao tu form
 			string Username = form["login-user"].ToString().Trim();
 			//lay ra password nhap vao tu form
 			string Password = form["login-password"].ToString().Trim();
 			//tim user co username va password nhu vua nhap
-			User user = db.Users.FirstOrDefault(u => u.Username == Username && u.Password == Password);
+			User user = db.Users.FirstOrDefault(u => u.Username.Equals(Username) && u.Password.Equals(Password));
 			if(user != null)
 			{
 				Session["User"] = user;
@@ -92,26 +95,28 @@ namespace ClassSurvey.Areas.Authentication.Controllers
 					return RedirectToAction("Index", "Home", new { area = "Admin" });
 				}
 			}
-			return View("Index", new { area = "Authentication" });
+			return View();
 		}
 
+		//Logout
+		//When logout, session about user and username is removed and return back to the default page
 		public ActionResult Logout()
 		{
 			Session.Remove("User");
 			Session.Remove("Username");
-			return RedirectToAction("Index", new {area = "Authentication" });
+			return RedirectToAction("Home","Authentication", new {area = "Authentication" });
 		}
 
+		//page not authorized, return status 403 page
 		public ActionResult NotAuthorized()
 		{
 			return View();
 		}
 
+		//page not found, return status 404 page
 		public ActionResult Page404()
 		{
 			return View();
 		} 
-
-
     }
 }

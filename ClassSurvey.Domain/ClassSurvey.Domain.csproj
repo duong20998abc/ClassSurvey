@@ -104,6 +104,14 @@
     <Compile Include="Migrations\201812060332160_AddNullToTeacherNameInTeacher.Designer.cs">
       <DependentUpon>201812060332160_AddNullToTeacherNameInTeacher.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812231152014_AddVirtualToStudentClasses.cs" />
+    <Compile Include="Migrations\201812231152014_AddVirtualToStudentClasses.Designer.cs">
+      <DependentUpon>201812231152014_AddVirtualToStudentClasses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812261223486_UpdateRegularExpression.cs" />
+    <Compile Include="Migrations\201812261223486_UpdateRegularExpression.Designer.cs">
+      <DependentUpon>201812261223486_UpdateRegularExpression.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -122,6 +130,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812060332160_AddNullToTeacherNameInTeacher.resx">
       <DependentUpon>201812060332160_AddNullToTeacherNameInTeacher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231152014_AddVirtualToStudentClasses.resx">
+      <DependentUpon>201812231152014_AddVirtualToStudentClasses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812261223486_UpdateRegularExpression.resx">
+      <DependentUpon>201812261223486_UpdateRegularExpression.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

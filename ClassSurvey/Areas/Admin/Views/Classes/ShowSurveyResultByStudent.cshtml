@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "ShowSurveyResultByStudent";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper" style="padding-left: 20px">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Classes</li>
+        </ol>
+    </section>  
+    @{ int i = 0;}
+    @{
+        if (@ViewBag.CountStudentsHaveSurvey == 0)
+        {
+            <h2>Sinh viên chưa làm khảo sát gần đây</h2>
+            <a href="/class/list-classes"><button class="btn btn-primary">Quay lại trang danh sách lớp học</button></a>
+        }
+        else
+        {
+            <br />
+            <div class= "table-content">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Số thứ tự</th>
+                            <th>Tiêu chí</th>
+                            <th>Điểm đánh giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(int k = 0; k < ViewBag.CountQuestion; k++)
+                        {
+                            k = k + 1;
+                            <tr>
+                                <td>@k</td>
+                                <td>@ViewBag.SurveyQuestion[@k]</td>
+                                <td>@ViewBag.Points[@k]</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+</div>
+

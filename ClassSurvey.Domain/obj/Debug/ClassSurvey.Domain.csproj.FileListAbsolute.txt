@@ -122,9 +122,11 @@ F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\bin\EPPlus.xm
 F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\obj\Debug\ClassSurvey.Domain.Migrations.AddUserAndUserRoleToDb.resources
 F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\obj\Debug\ClassSurvey.Domain.Migrations.AddNullToTeacherNameInTeacher.resources
+F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\obj\Debug\ClassSurvey.Domain.Migrations.AddVirtualToStudentClasses.resources
 F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\obj\Debug\ClassSurvey.Domain.csproj.GenerateResource.cache
 F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\obj\Debug\ClassSurvey.Domain.csproj.CoreCompileInputs.cache
 F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\obj\Debug\ClassSurvey.Domain.csproj.CopyComplete
 F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\obj\Debug\ClassSurvey.Domain.dll
 F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\obj\Debug\ClassSurvey.Domain.pdb
 F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\obj\Debug\ClassSurvey.Domain.csprojAssemblyReference.cache
+F:\Tài liệu môn học chung\Web\ClassSurvey\ClassSurvey.Domain\obj\Debug\ClassSurvey.Domain.Migrations.UpdateRegularExpression.resources

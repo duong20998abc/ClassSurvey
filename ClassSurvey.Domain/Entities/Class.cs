@@ -25,6 +25,6 @@ namespace ClassSurvey.Domain.Entities
 		public int Semester { get; set; }
 		public int NumberOfDegrees { get; set; }
 
-		public ICollection<StudentClass> StudentClasses { get; set; }
+		public virtual ICollection<StudentClass> StudentClasses { get; set; }
 	}
 }

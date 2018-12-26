@@ -6,12 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ClassSurvey.Authorization;
 using ClassSurvey.Domain;
 using ClassSurvey.Domain.Entities;
 using OfficeOpenXml;
 
-namespace ClassSurvey.Controllers
+namespace ClassSurvey.Areas.Admin.Controllers
 {
+	[AuthorizeBusiness]
 	public class ClassesController : Controller
 	{
 		private ClassSurveyDbContext db = new ClassSurveyDbContext();
@@ -29,7 +31,7 @@ namespace ClassSurvey.Controllers
 			//neu id null
 			if (id == null)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 			//lay ra class co Id = id
 			Class @class = db.Classes.Find(id);
@@ -37,7 +39,7 @@ namespace ClassSurvey.Controllers
 			//neu khong tim thay class co id
 			if (@class == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 			return View(@class);
 		}
@@ -75,12 +77,12 @@ namespace ClassSurvey.Controllers
 		{
 			if (id == null)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 			Class @class = db.Classes.Find(id);
 			if (@class == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 			return View(@class);
 		}
@@ -97,7 +99,7 @@ namespace ClassSurvey.Controllers
 			//khong tim thay class
 			if (@class == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 			//xoa lop
 			db.Classes.Remove(@class);
@@ -139,9 +141,8 @@ namespace ClassSurvey.Controllers
 			}
 			catch (Exception)
 			{
-				return RedirectToAction("Index");
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction("Index", "Classes", new { area = "Admin" });
 		}
 
 		//ham bool them data, phuc vu cho ham import o tren
@@ -235,13 +236,13 @@ namespace ClassSurvey.Controllers
 		{
 			if (id == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 			//find ra class co Id = id
 			Class @class = db.Classes.FirstOrDefault(c => c.Id == id);
 			if (@class == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 
 			//lay ra danh sach id cua sinh vien da danh gia mon hoc (co survey result)
@@ -261,7 +262,7 @@ namespace ClassSurvey.Controllers
 			//khong co sinh vien duoc tim thay
 			if (student == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 
 			/*tinh diem danh gia trung binh qua cac cuoc khao sat cua sinh vien
@@ -284,7 +285,7 @@ namespace ClassSurvey.Controllers
 		{
 			if (id == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 
 			//lay ra danh sach hoc sinh trong lop hoc phan co ID = id
@@ -292,7 +293,7 @@ namespace ClassSurvey.Controllers
 			//khong tim thay
 			if (listStudents == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 			return View(listStudents);
 		}
@@ -302,7 +303,7 @@ namespace ClassSurvey.Controllers
 		{
 			if (id == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 			//dem so sinh vien da lam khao sat
 			ViewBag.CountStudentsHaveSurvey = db.Surveys.Where(s => s.StudentClassId == id).ToList().Count();
@@ -316,7 +317,7 @@ namespace ClassSurvey.Controllers
 			ViewBag.Points = db.Surveys.Where(s => s.StudentClassId == id).Select(s => s.Result).ToList();
 			if (ViewBag.Points == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 			//lay ra danh sach cau hoi khao sat
 			ViewBag.SurveyQuestion = db.SurveyQuestions.Select(sc => sc.Content).ToList();

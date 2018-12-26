@@ -58,15 +58,15 @@ namespace ClassSurvey.Domain.Migrations
 					new UserRole{Position = "Admin", Area = "Admin", Controller = "Surveys", Action = "Create"},
 					new UserRole{Position = "Admin", Area = "Admin", Controller = "Surveys", Action = "Edit"},
 					new UserRole{Position = "Admin", Area = "Admin", Controller = "Surveys", Action = "Delete"},
-					new UserRole{Position = "Admin", Area = "Member", Controller = "Student", Action = "Index"},
-					new UserRole{Position = "Admin", Area = "Member", Controller = "Student", Action = "ShowStudentInfo"},
-					new UserRole{Position = "Admin", Area = "Member", Controller = "Student", Action = "ShowListClass"},
-					new UserRole{Position = "Admin", Area = "Member", Controller = "Student", Action = "DoSurvey"},
-					new UserRole{Position = "Admin", Area = "Member", Controller = "Teacher", Action = "Index"},
-					new UserRole{Position = "Admin", Area = "Member", Controller = "Teacher", Action = "ShowTeacherInfo"},
-					new UserRole{Position = "Admin", Area = "Member", Controller = "Teacher", Action = "ShowListClasses"},
-					new UserRole{Position = "Admin", Area = "Member", Controller = "Teacher", Action = "GetStudentsInClass"},
-					new UserRole{Position = "Admin", Area = "Member", Controller = "Teacher", Action = "ShowSurveyResult"}
+					new UserRole{Position = "Student", Area = "Member", Controller = "Student", Action = "Index"},
+					new UserRole{Position = "Student", Area = "Member", Controller = "Student", Action = "ShowStudentInfo"},
+					new UserRole{Position = "Student", Area = "Member", Controller = "Student", Action = "ShowListClass"},
+					new UserRole{Position = "Student", Area = "Member", Controller = "Student", Action = "DoSurvey"},
+					new UserRole{Position = "Teacher", Area = "Member", Controller = "Teacher", Action = "Index"},
+					new UserRole{Position = "Teacher", Area = "Member", Controller = "Teacher", Action = "ShowTeacherInfo"},
+					new UserRole{Position = "Teacher", Area = "Member", Controller = "Teacher", Action = "ShowListClasses"},
+					new UserRole{Position = "Teacher", Area = "Member", Controller = "Teacher", Action = "GetStudentsInClass"},
+					new UserRole{Position = "Teacher", Area = "Member", Controller = "Teacher", Action = "ShowSurveyResult"}
 				};
 				context.UserRoles.AddRange(roles);
 				context.SaveChanges();

@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ClassSurvey.Authorization;
 using ClassSurvey.Domain;
 using ClassSurvey.Domain.Entities;
 
-namespace ClassSurvey.Controllers
+namespace ClassSurvey.Areas.Admin.Controllers
 {
+	[AuthorizeBusiness]
     public class SurveysController : Controller
     {
         private ClassSurveyDbContext db = new ClassSurveyDbContext();
@@ -21,48 +23,35 @@ namespace ClassSurvey.Controllers
             return View(db.SurveyQuestions.ToList());
         }
 
-        // GET: Surveys/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.StudentClassId = new SelectList(db.StudentClasses, "Id", "Id");
-        //    ViewBag.SurveyQuestionId = new SelectList(db.SurveyQuestions, "Id", "Content");
-        //    return View();
-        //}
+		public ActionResult Create()
+		{
+			return View();
+		}
 
-        // POST: Surveys/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		// POST: Surveys/Create
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FormCollection form)
+        public ActionResult Create([Bind(Include = "Id,Content,Status,IsDeleted")] SurveyQuestion surveyQuestion)
         {
 			//1 ham trong Entity Framework
 			//Disable create Proxy when create a new context
 			//useful in lazy loading
-			db.Configuration.ProxyCreationEnabled = false;
-
-			string content = form["Content"].ToString();
-			if (!db.SurveyQuestions.Any(s => s.Content.Equals(content)))
+		
+			if (ModelState.IsValid)
 			{
 				//Tao moi 1 cau hoi trong danh sach cau hoi cua survey va add vao DB
-				SurveyQuestion question = new SurveyQuestion();
-				question.Content = content;
-				db.SurveyQuestions.Add(question);
+				db.SurveyQuestions.Add(surveyQuestion);
+				db.SaveChanges();
 				//Xoa bo diem danh gia theo tieu chi cu => Yeu cau sinh vien cap nhat ban danh gia khac voi noi dung moi
 				db.Surveys.RemoveRange(db.Surveys.ToList());
 				db.SaveChanges();
 
-				//Lay ra id cua cau hoi trong survey vua duoc tao
-				int NewQuestionId = db.SurveyQuestions.Max(q => q.Id);
-
-				//dat status 1 cau hoi moi duoc tao la Create, lay ra Json bao gom status, content, id
-				return Json(new {status = "Success", content = content, id = NewQuestionId }, JsonRequestBehavior.AllowGet);
-			}else
-			{
-				//default cua HttpPost la DenyGet de ngan specific attack
-				//o day ta muon su dung hoac allow Get, ta su dung JsonRequestBehavior.AllowGet
-				return Json(new { status = "Fail" }, JsonRequestBehavior.AllowGet);
+				return RedirectToAction("Index", "Surveys", new { area = "Admin" });
 			}
+
+			return View(surveyQuestion);
         }
 
         // GET: Surveys/Edit/5
@@ -71,8 +60,8 @@ namespace ClassSurvey.Controllers
 			//Khong tim thay id
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
 
 			//Tim cau hoi co id trung voi Id 
 			SurveyQuestion question = db.SurveyQuestions.FirstOrDefault(q => q.Id == id);
@@ -80,8 +69,8 @@ namespace ClassSurvey.Controllers
 			//Khong tim thay cau hoi
             if (question == null)
             {
-                return HttpNotFound();
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             return View(question);
         }
 
@@ -90,23 +79,16 @@ namespace ClassSurvey.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(FormCollection form)
+        public ActionResult Edit([Bind(Include = "Id,Content,Status,IsDeleted")] SurveyQuestion surveyQuestion)
         {
-			db.Configuration.ProxyCreationEnabled = false;
-			string content = form["Content"].ToString();
-			int QuestionId = int.Parse(form["QuestionId"].ToString());
-			
-			if(db.SurveyQuestions.Any(q => q.Content.Equals(content) && q.Id != QuestionId))
+			if (ModelState.IsValid)
 			{
-				return Json(new { status = "Fail" }, JsonRequestBehavior.AllowGet);
-			}else
-			{
-				SurveyQuestion surveyQuestion = db.SurveyQuestions.FirstOrDefault(q => q.Id == QuestionId);
-				surveyQuestion.Content = content;
+				db.Entry(surveyQuestion).State = EntityState.Modified;
 				db.SaveChanges();
-				return Json(new { status = "Edited" }, JsonRequestBehavior.AllowGet);
+				return RedirectToAction("Index", "Surveys", new { area = "Admin" });
 			}
-        }
+			return View(surveyQuestion);
+		}
 
         // GET: Surveys/Delete/5
         public ActionResult Delete(int? id)
@@ -114,14 +96,14 @@ namespace ClassSurvey.Controllers
 			db.Configuration.ProxyCreationEnabled = false;
 			if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             SurveyQuestion survey = db.SurveyQuestions.FirstOrDefault(q => q.Id == id);
             if (survey == null)
             {
-                return HttpNotFound();
-            }
-            return Json(survey, JsonRequestBehavior.AllowGet);
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
+            return View(survey);
         }
 
         // POST: Surveys/Delete/5
@@ -132,7 +114,7 @@ namespace ClassSurvey.Controllers
             SurveyQuestion question = db.SurveyQuestions.Find(id);
 			if(question == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 
 			db.SurveyQuestions.Remove(question);
@@ -141,8 +123,8 @@ namespace ClassSurvey.Controllers
 			IEnumerable<Survey> listSurveys = db.Surveys.Where(s => s.SurveyQuestionId == id);
 			db.Surveys.RemoveRange(listSurveys);
             db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+			return RedirectToAction("Index", "Surveys", new { area = "Admin" });
+		}
 
         protected override void Dispose(bool disposing)
         {

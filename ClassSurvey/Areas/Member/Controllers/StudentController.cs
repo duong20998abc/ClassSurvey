@@ -1,4 +1,5 @@
-﻿using ClassSurvey.Domain;
+﻿using ClassSurvey.Authorization;
+using ClassSurvey.Domain;
 using ClassSurvey.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ClassSurvey.Areas.Member.Controllers
 {
+	[AuthorizeBusiness]
     public class StudentController : Controller
     {
 		private ClassSurveyDbContext db = new ClassSurveyDbContext();
@@ -31,7 +33,7 @@ namespace ClassSurvey.Areas.Member.Controllers
 					.GroupBy(x => x.StudentClassId).Count();
 				return View();
 			}
-			return View();
+			return RedirectToAction("Home", "Authentication", new { area = "Authentication" });
 		}
 
 		//lay ra thong tin cua sinh vien
@@ -45,7 +47,7 @@ namespace ClassSurvey.Areas.Member.Controllers
 				Student student = db.Students.FirstOrDefault(s => s.Id == user.StudentId);
 				return View(student);
 			}
-			return RedirectToAction("Login", "Home", new {area = "SignIn" });
+			return RedirectToAction("Home", "Authentication", new {area = "Authentication" });
 		}
 
 		//lay ra danh sach lop ma sinh vien tham gia
@@ -60,7 +62,7 @@ namespace ClassSurvey.Areas.Member.Controllers
 					.StudentClasses.ToList();
 				return View(listClasses);
 			}
-			return RedirectToAction("Login", "Home", new { area = "SignIn" });
+			return RedirectToAction("Home", "Authentication", new { area = "Authentication" });
 		}
 
 		//Thuc hien khao sat mon hoc

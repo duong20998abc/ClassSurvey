@@ -2,70 +2,87 @@
 
 @{
     ViewBag.Title = "Danh sách sinh viên";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Danh sách sinh viên</h2>
-
-<p>
-    @Html.ActionLink("Thêm mới sinh viên", "Create")
-</p>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.StudentCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StudentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ClassByGrade)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.StudentCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StudentName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ClassByGrade)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        Nhập dữ liệu từ File Excel
+<div class="content-wrapper" style="padding-left: 10px">
+    <section class="content-header">
+        <h1>
+            Danh sách sinh viên
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Students</li>
+        </ol>
+    </section>
+    <div class="add-student" style="padding-bottom: 10px; border-bottom: 1px solid gray; margin-bottom: 10px">
+            <p style="padding-left: 18px; padding-top: 10px">
+                <a href="/student/create"><button class="btn btn-primary">Thêm mới sinh viên</button></a>
+            </p>
     </div>
-    <form action="/Students/ImportStudentFromExcel" method="post" enctype="multipart/form-data"
-          style="padding: 15px">
-        <input type="file" name="fileUpload" />
-        <br />
-        <button type="submit" value="Import" class="btn btn-success" />Import Data</button>
-    </form>
+    <table class="table table-striped table-hover" id="table-student">
+        <thead>
+            <tr>
+                <th>
+                    Mã sinh viên
+                </th>
+                <th>
+                   Tên sinh viên
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Lớp học phần
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsDeleted)
+                </th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClassByGrade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsDeleted)
+                    </td>
+                    <td>
+                        <a href="/student/edit/@item.Id"><button class="btn btn-primary">Thay đổi</button></a>
+                        <a href="/student/delete/@item.Id"><button class="btn btn-danger">Xóa</button></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
 
+    </table>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Nhập dữ liệu từ File Excel
+        </div>
+        <form action="/student/import" method="post" enctype="multipart/form-data"
+              style="padding: 15px">
+            <input type="file" name="fileUpload" />
+            <br />
+            <button type="submit" value="Import" class="btn btn-success" />Import Data</button>
+        </form>
+    </div>
 </div>
+
+
+

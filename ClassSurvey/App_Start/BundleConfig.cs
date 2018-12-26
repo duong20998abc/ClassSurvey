@@ -25,6 +25,10 @@ namespace ClassSurvey
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",
 					  "~/Content/site.css"));
+
+			bundles.Add(new StyleBundle("~/Content/adminlte").Include("~/Content/AdminLTE.min.css"));
+			bundles.Add(new StyleBundle("~/Content/font-awesome").Include("~/Content/font-awesome.min.css"));
+			bundles.Add(new StyleBundle("~/Content/ionicon").Include("~/Content/ionicons.min.css"));
 		}
 	}
 }

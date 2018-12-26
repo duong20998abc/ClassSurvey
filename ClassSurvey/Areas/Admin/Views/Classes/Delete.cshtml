@@ -1,74 +1,88 @@
 ﻿@model ClassSurvey.Domain.Entities.Class
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Xóa lớp học phần";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Class</h4>
-    <hr />
-    <dl class="dl-horizontal">
-       
-        <dt>
-            @Html.DisplayNameFor(model => model.ClassName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ClassName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ClassCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ClassCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Semester)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Semester)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberOfDegrees)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumberOfDegrees)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+<style>
+    dl dt {
+        padding-bottom: 10px;
     }
+</style>
 
+<div class="content-wrapper" style="padding-left: 20px">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Classes</li>
+        </ol>
+    </section>
+    <h3>Bạn có chắc muốn xóa lớp học phần này không?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                Tên lớp: 
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClassName)
+            </dd>
+
+            <dt>
+                Mã lớp: 
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClassCode)
+            </dd>
+
+            <dt>
+                Học kì: 
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Semester)
+            </dd>
+
+            <dt>
+                Số tín chỉ:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NumberOfDegrees)
+            </dd>
+
+            <dt>
+                Trạng thái:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsDeleted)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Xóa" class="btn btn-danger" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+
+    </div>
 </div>
+

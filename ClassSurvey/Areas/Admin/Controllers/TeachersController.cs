@@ -6,12 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ClassSurvey.Authorization;
 using ClassSurvey.Domain;
 using ClassSurvey.Domain.Entities;
 using OfficeOpenXml;
 
-namespace ClassSurvey.Controllers
+namespace ClassSurvey.Areas.Admin.Controllers
 {
+	[AuthorizeBusiness]
     public class TeachersController : Controller
     {
         private ClassSurveyDbContext db = new ClassSurveyDbContext();
@@ -51,13 +53,13 @@ namespace ClassSurvey.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             Teacher teacher = db.Teachers.Find(id);
             if (teacher == null)
             {
-                return HttpNotFound();
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             return View(teacher);
         }
 
@@ -77,6 +79,15 @@ namespace ClassSurvey.Controllers
             if (ModelState.IsValid)
             {
                 db.Teachers.Add(teacher);
+				int id = db.Teachers.Max(t => t.Id);
+				User user = new User()
+				{
+					Username = teacher.Username,
+					Password = teacher.Password,
+					Position = "Teacher",
+					TeacherId = id
+				};
+				db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -89,13 +100,13 @@ namespace ClassSurvey.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             Teacher teacher = db.Teachers.Find(id);
             if (teacher == null)
             {
-                return HttpNotFound();
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             return View(teacher);
         }
 
@@ -120,13 +131,13 @@ namespace ClassSurvey.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             Teacher teacher = db.Teachers.Find(id);
             if (teacher == null)
             {
-                return HttpNotFound();
-            }
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
+			}
             return View(teacher);
         }
 
@@ -138,9 +149,11 @@ namespace ClassSurvey.Controllers
             Teacher teacher = db.Teachers.Find(id);
 			if(teacher == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
+			User user = db.Users.FirstOrDefault(u => u.TeacherId == teacher.Id);
             db.Teachers.Remove(teacher);
+			db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -148,17 +161,13 @@ namespace ClassSurvey.Controllers
 		[HttpPost]
 		public ActionResult ImportTeacherFromExcel (HttpPostedFileBase file)
 		{
-			ViewBag.message = "Import không thành công";
 			int count = 0;
 			var package = new ExcelPackage(file.InputStream);
 			if(ImportData(out count, package))
 			{
 				ViewBag.message = "Bạn đã import danh sách giáo viên thành công";
 			}
-
-			ViewBag.CountTeacher = count;
-
-			return View();
+			return RedirectToAction("Index", "Teachers", new { area = "Admin" });
 		}
 
 		public bool ImportData(out int count, ExcelPackage package)
@@ -217,6 +226,16 @@ namespace ClassSurvey.Controllers
 					teacher.Email = email;
 
 					db.Teachers.Add(teacher);
+					db.SaveChanges();
+
+					int id = db.Teachers.Max(x => x.Id);
+					User user = new User() {
+						Username = username,
+						Password = password,
+						Position = "Teacher",
+						TeacherId = id
+					};
+					db.Users.Add(user);
 					db.SaveChanges();
 					result = true;
 				}

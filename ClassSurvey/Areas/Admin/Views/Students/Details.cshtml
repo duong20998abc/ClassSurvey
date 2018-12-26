@@ -2,65 +2,86 @@
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<style>
+    dl dt {
+        padding-bottom: 10px;
+    }
+</style>
 
-<div>
-    <h4>Student</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.StudentCode)
-        </dt>
+<div class="content-wrapper">
+    <section class="content-header" style="border-bottom: 1px solid gray; padding-bottom: 10px">
+        <h1>
+            Thông tin sinh viên:  @Model.StudentName
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Students</li>
+        </ol>
+    </section>
+    <div class="student-info" style="padding-top: 20px">
+        <dl class="dl-horizontal" style="font-size: 12pt">
+            <dt>
+                Mã sinh viên:
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.StudentCode)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.StudentCode)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StudentName)
-        </dt>
+            <dt>
+                Tên sinh viên: 
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.StudentName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.StudentName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+            <dt>
+                Email:
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ClassByGrade)
-        </dt>
+            <dt>
+                Lớp học phần: 
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ClassByGrade)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ClassByGrade)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
+            <dt>
+                Trạng thái:
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
+            <dt>
+               Bị xóa:
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.IsDeleted)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        <div style="padding-left: 20px;">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            <a href="/student/list-students">Quay lại trang danh sách sinh viên</a>
+        </div>
+    }
+    
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
