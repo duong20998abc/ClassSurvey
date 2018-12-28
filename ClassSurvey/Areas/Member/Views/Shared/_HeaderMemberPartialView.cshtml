@@ -1,4 +1,5 @@
-﻿<style>
+﻿
+<style>
     .dropdown:hover > .dropdown-menu {
         display: block;
     }
@@ -13,18 +14,19 @@
     }
 </style>
 
-<header id="page-header" style="width: 98%">
+<header id="page-header">
     <div class="row bg-dark" style="padding-left: 30px">
         <div class="col-9 pt-3">
             <a href="https://uet.vnu.edu.vn">
                 <img src="~/Areas/Admin/Contents/Images/UET.png" height="30" alt="" class="pl-2" />
             </a>
+            <span style="color: white">Website môn học</span>
         </div>
         <div class="col-3 pt-3">
             <div class="dropdown pull-right">
                 <a href="#" id="profile" class="btn dropdown-toggle text-light" data-toggle="dropdown" role="button"
                    aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-fw fa-user-circle"></i>@Session["Username"]
+                    <i class="fa fa-fw fa-user-circle"></i> @Session["Username"]
                 </a>
                 <div class="dropdown-menu m-0" aria-labelledby="profile">
                     <a class="dropdown-item" href="../html/student.html">Trang cá nhân</a>
@@ -34,7 +36,7 @@
         </div>
     </div>
     <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark affix-top col-sm-12"  style="padding-left: 50px">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark affix-top col-sm-12" style="padding-left: 50px">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,23 +45,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="../html/main.html">Trang chủ</a>
+                        <a class="nav-link" href="/student/home">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/student.html">Trang cá nhân</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sự kiện</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Các khóa học
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="../html/survey.html">Toán cao cấp</a>
-                            <a class="dropdown-item" href="#">Toán cao cấp</a>
-                        </div>
+                        <a class="nav-link" href="/student/info">Trang cá nhân</a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">

@@ -14,22 +14,12 @@
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
-        @Html.Partial("_HeaderMemberPartialView")
-        @Html.Partial("_NavbarStudentPartialView")
-        <div class="body-content container-fluid" style="height: 78.35%">
-            <div id="page-content" class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                        @Html.Partial("_AsideMenuStudentPartialView")
-                    </div>
-                    <div class="col-md-9">
-                        @RenderBody()
-                    </div>
-                </div>
-            </div>
+    <div class="container-fluid" >
+        <div class="body-content">
+            @RenderBody()
             <hr />
         </div>
+        @Html.Partial("_FooterMemberPartialView")
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -28,49 +28,49 @@ namespace ClassSurvey.Areas.Member
 
 			context.MapRoute(
 				"StudentInfo",
-				"Student/info/{id}",
+				"student/info/{id}",
 				new { controller = "Student", action = "ShowStudentInfo", id = UrlParameter.Optional }
 			);
 
 			context.MapRoute(
 				"StudentClasses",
-				"Student/list-classes/{id}",
+				"student/list-classes/{id}",
 				new { controller = "Student", action = "ShowListClass", id = UrlParameter.Optional }
 			);
 
 			context.MapRoute(
 				"Survey",
-				"Student/survey/{id}",
+				"student/survey/{id}",
 				new { controller = "Student", action = "DoSurvey", id = UrlParameter.Optional }
 			);
 
 			context.MapRoute(
 				"TeacherIndex",
-				"Teacher/Index/{id}",
+				"teacher/home/{id}",
 				new { controller = "Teacher", action = "Index", id = UrlParameter.Optional }
 			);
 
 			context.MapRoute(
 				"TeacherInfo",
-				"Teacher/info/{id}",
+				"teacher/info/{id}",
 				new { controller = "Teacher", action = "ShowTeacherInfo", id = UrlParameter.Optional }
 			);
 
 			context.MapRoute(
 				"TeacherListClasses",
-				"Teacher/list-classes/{id}",
-				new { controller = "Teacher", action = "DoSurvey", id = UrlParameter.Optional }
+				"teacher/list-classes/{id}",
+				new { controller = "Teacher", action = "ShowListClasses", id = UrlParameter.Optional }
 			);
 
 			context.MapRoute(
 				"SurveyResults",
-				"Teacher/survey-results/{id}",
+				"teacher/survey-results/{id}",
 				new { controller = "Teacher", action = "ShowSurveyResult", id = UrlParameter.Optional }
 			);
 
 			context.MapRoute(
 				"TeacherListStudents",
-				"Teacher/list-students/{id}",
+				"teacher/list-students/{id}",
 				new { controller = "Teachers", action = "GetStudentsInClass", id = UrlParameter.Optional }
 			);
 		}

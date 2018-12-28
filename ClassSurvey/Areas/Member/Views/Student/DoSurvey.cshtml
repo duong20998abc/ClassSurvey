@@ -1,220 +1,79 @@
 ﻿@model ClassSurvey.Domain.Entities.StudentClass
 
 @{
-    ViewBag.Title = "DoSurvey";
+    ViewBag.Title = "Đánh giá môn học";
+    Layout = "~/Areas/Member/Views/Shared/_LayoutMember.cshtml";
 }
 
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-
-</head>
-
-<body>
-    <div class="container-fluid">
-        <header id="page-header">
-            <div class="row bg-dark">
-                <div class="col-9 pt-3">
-                    <a href="https://uet.vnu.edu.vn">
-                        <img src="~/Areas/Member/Contents/Css/dhcn.png" height="30" alt="" class="pl-2"/>
-                    </a>
-                </div>
-                <div class="col-3 pt-3">
-                    <div class="dropdown pull-right">
-                        <a href="#" id="profile" class="btn dropdown-toggle text-light" data-toggle="dropdown" role="button"
-                           aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-fw fa-user-circle"></i>Nguyễn Văn A
-                        </a>
-                        <div class="dropdown-menu m-0" aria-labelledby="profile">
-                            <a class="dropdown-item" href="../html/student.html">Trang cá nhân</a>
-                            <a class="dropdown-item" href="../html/guest-main.html">Thoát</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark affix-top col-sm-12">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="../html/main.html">Trang chủ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../html/student.html">Trang cá nhân</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Sự kiện</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Các khóa học
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="../html/survey.html">Toán cao cấp</a>
-                                    <a class="dropdown-item" href="#">Toán cao cấp</a>
-                                </div>
-                            </li>
-                        </ul>
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
-                    </div>
-                </nav>
-            </div>
-        </header>
-        <div id="page-content" class="container-fluid">
-            <nav aria-label="breadcrumb">
-                <ul class="breadcrumb mt-3">
-                    <li class="breadcrumb-item"><a href="../html/main.html">Trang chủ</a></li>
-                    <li class="breadcrumb-item"><a href="#">Các khóa học</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">INT2201 - Toán cao cấp</li>
-                </ul>
-            </nav>
-            <div class="row">
-                <div class="col-md-3">
-                    <h4 class="panel">Điều hướng</h4>
-                    <ul class="nav flex-column bg-light">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../html/main.html">
-                                <i class="fa fa-fw fa-home"></i>Trang
-                                chủ
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../html/student.html">
-                                <i class="fa fa-fw fa-user"></i>Trang
-                                cá nhân
-                            </a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-fw fa-calendar"></i>Sự kiện</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" href="#submenu1" data-toggle="collapse" data-target="#submenu1">
-                                <i class="fa fa-fw fa-caret-right"></i>Các khóa học
-                            </a>
-                            <div class="collapse show" id="submenu1" aria-expanded="true">
-                                <ul class="flex-column pl-3 nav">
-                                    <li class="nav-item">
-                                        <a class="nav-link collapsed py-1" href="#submenu1sub1" data-toggle="collapse"
-                                           data-target="#submenu1sub1">
-                                            <i class="fa fa-fw fa-caret-right"></i>HKI 2018-2019
-                                        </a>
-                                        <div class="collapse show" id="submenu1sub1" aria-expanded="true">
-                                            <ul class="flex-column nav pl-3">
-                                                <li class="nav-item active">
-                                                    <a class="nav-link pl-3" href="#">
-                                                        <i class="fa fa-fw fa-briefcase"></i>Toán cao cấp
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link pl-3" href="#">
-                                                        <i class="fa fa-fw fa-briefcase"></i>Toán cao cấp
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-9">
-                    <h4 class="text-center"><br>Toán cao cấp</h4>
-                    <form action="survey.php" class="container" method="POST">
-                        <div class="row">
-                            <p class="col-7">1.*Cở sở vật chất</p>
-                            <p class="col-1 text-center">1</p>
-                            <p class="col-1 text-center">2</p>
-                            <p class="col-1 text-center">3</p>
-                            <p class="col-1 text-center">4</p>
-                            <p class="col-1 text-center">5</p>
-                        </div>
-                        <div class="form-group row border-top mb-0">
-                            <label class="col-7 mt-2 " for="form-1-1">Giảng đường đáp ứng được yêu cầu của môn học</label>
-                            <input class="col-1 mt-3" type="radio" name="form-1-1" value="1" checked>
-                            <input class="col-1 mt-3" type="radio" name="form-1-1" value="1">
-                            <input class="col-1 mt-3" type="radio" name="form-1-1" value="1">
-                            <input class="col-1 mt-3" type="radio" name="form-1-1" value="1">
-                            <input class="col-1 mt-3" type="radio" name="form-1-1" value="1">
-                        </div>
-                        <div class="form-group row border-top">
-                            <label class="col-7 mt-2" for="form-1-1">Giảng đường đáp ứng được yêu cầu của môn học</label>
-                            <input class="col-1 mt-3" type="radio" name="form-1-2" value="1" checked>
-                            <input class="col-1 mt-3" type="radio" name="form-1-2" value="1">
-                            <input class="col-1 mt-3" type="radio" name="form-1-2" value="1">
-                            <input class="col-1 mt-3" type="radio" name="form-1-2" value="1">
-                            <input class="col-1 mt-3" type="radio" name="form-1-2" value="1">
-                        </div>
-                        <br>
-                        <div class="row">
-                            <p class="col-7">2.*Môn học</p>
-                            <p class="col-1 text-center">1</p>
-                            <p class="col-1 text-center">2</p>
-                            <p class="col-1 text-center">3</p>
-                            <p class="col-1 text-center">4</p>
-                            <p class="col-1 text-center">5</p>
-                        </div>
-                        <div class="form-group row border-top">
-                            <label class="col-7 mt-2" for="form-1-1">Giảng đường đáp ứng được yêu cầu của môn học</label>
-                            <input class="col-1 mt-3" type="radio" name="form-2-1" value="1" checked>
-                            <input class="col-1 mt-3" type="radio" name="form-2-1" value="1">
-                            <input class="col-1 mt-3" type="radio" name="form-2-1" value="1">
-                            <input class="col-1 mt-3" type="radio" name="form-2-1" value="1">
-                            <input class="col-1 mt-3" type="radio" name="form-2-1" value="1">
-                        </div>
-                        <br>
-
-                        <div class="row">
-                            <p class="col-7">3.*Hoạt động của giảng viên</p>
-                            <p class="col-1 text-center">1</p>
-                            <p class="col-1 text-center">2</p>
-                            <p class="col-1 text-center">3</p>
-                            <p class="col-1 text-center">4</p>
-                            <p class="col-1 text-center">5</p>
-                        </div>
-                        <br>
-                        <p>4.Ý kiền đóng góp thêm</p>
-                        <div class="form-group row">
-                            <label for="form-4"></label>
-                            <textarea name="form-4" id="form-4" class="form-control" rows="7"></textarea>
-                        </div>
-                        <div class="pull-right">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="reset" class="btn btn-danger">Reset</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <br>
+<div id="page-content" class="container-fluid">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb mt-3">
+            <li class="breadcrumb-item"><a href="../html/main.html">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="#">Các khóa học</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Class.ClassName</li>
+        </ul>
+    </nav>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Partial("_AsideMenuStudentPartialView")
         </div>
-        <footer id="page-footer">
-            <div class="text-light bg-dark row">
-                <p class="pt-3 pl-3">2018 Trường Đại học Công nghệ, ĐHQGHN</p>
-            </div>
-        </footer>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-                crossorigin="anonymous"></script>
-        <script src="../js/main.js"></script>
-    </div>
-</body>
+        <div class="col-md-9">
+            <h2>Đánh giá môn học</h2>
+            <br />
+            <h4 style="font-size: 13pt">Tên môn học: @Model.Class.ClassName</h4>
+            <h4 style="font-size: 13pt">Mã môn học : @Model.Class.ClassCode</h4>
+            <h4 style="font-size: 13pt">Số tín chỉ : @Model.Class.NumberOfDegrees</h4>
+            <h4 style="font-size: 13pt">Giảng viên: @Model.Teacher.TeacherName</h4>
+            <br />
+            @if (ViewBag.Message != null)
+            {
+                <h3>@ViewBag.Message</h3>
 
-</html>
+            }
+            else
+            {
+                using (Html.BeginForm())
+                {
+                    <div class="row">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Số thứ tự</th>
+                                    <th>Tiêu chí</th>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                    <th>5</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    for (int i = 0; i < ViewBag.CountQuestion; i++)
+                                    {
+                                        <tr>
+                                            <td>@(i + 1)</td>
+                                            <td>@ViewBag.SurveyQuestions[@i]</td>
+                                            <td>@Html.RadioButton(@i.ToString(), 1)</td>
+                                            <td>@Html.RadioButton(@i.ToString(), 2)</td>
+                                            <td>@Html.RadioButton(@i.ToString(), 3)</td>
+                                            <td>@Html.RadioButton(@i.ToString(), 4)</td>
+                                            <td>@Html.RadioButton(@i.ToString(), 5)</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @Html.Hidden("classId", Model.ClassId);
+                    @Html.Hidden("studentdetailId", Model.Id);
+
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                }
+            }
+        </div>
+    </div>
+    <br>
+</div>
 

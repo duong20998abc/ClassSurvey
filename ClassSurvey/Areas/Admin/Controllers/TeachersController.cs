@@ -24,30 +24,6 @@ namespace ClassSurvey.Areas.Admin.Controllers
             return View(db.Teachers.ToList());
         }
 
-		//tim kiem giao vien
-		[HttpPost]
-		public ActionResult Index(FormCollection form)
-		{
-			//lay string nguoi dung nhap vao
-			string keyword = form["keyword"].ToString();
-			ViewBag.Keyword = keyword;
-			//lay ra list giao vien co ten chua keyword nguoi dung vua nhap
-			List<Teacher> listTeachersWithKeywords = db.Teachers.Where(x => x.TeacherName.Contains(keyword)).ToList();
-			
-			//neu ko tim thay ket qua
-			if (listTeachersWithKeywords.Count == 0)
-			{
-				ViewBag.ErrorMessage = "Không tìm thấy giáo viên nào. Vui lòng thử lại";
-				return View(db.Students.ToList());
-			}
-			else
-			{
-				ViewBag.SuccessMessage = "Danh sách giáo viên với từ khóa: " + keyword;
-				ViewBag.Count = listTeachersWithKeywords.Count();
-				return View(listTeachersWithKeywords.ToList());
-			}
-		}
-
 		// GET: Teachers/Details/5
 		public ActionResult Details(int? id)
         {
@@ -78,6 +54,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+				teacher.Password = HashPassword.ComputeSha256Hash(teacher.Password);
                 db.Teachers.Add(teacher);
 				int id = db.Teachers.Max(t => t.Id);
 				User user = new User()
@@ -120,6 +97,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(teacher).State = EntityState.Modified;
+				teacher.Password = HashPassword.ComputeSha256Hash(teacher.Password);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -221,7 +199,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
 				{
 					var teacher = new Teacher();
 					teacher.Username = username;
-					teacher.Password = password;
+					teacher.Password = HashPassword.ComputeSha256Hash(password);
 					teacher.TeacherName = name;
 					teacher.Email = email;
 
@@ -231,7 +209,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
 					int id = db.Teachers.Max(x => x.Id);
 					User user = new User() {
 						Username = username,
-						Password = password,
+						Password = HashPassword.ComputeSha256Hash(password),
 						Position = "Teacher",
 						TeacherId = id
 					};

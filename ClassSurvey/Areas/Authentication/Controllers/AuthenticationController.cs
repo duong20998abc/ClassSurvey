@@ -1,4 +1,5 @@
-﻿using ClassSurvey.Domain;
+﻿using ClassSurvey.Authorization;
+using ClassSurvey.Domain;
 using ClassSurvey.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace ClassSurvey.Areas.Authentication.Controllers
 					Session["Username"] = student.StudentName.ToUpper();
 					//redirect to student page
 					//actionName = Index, controllerName = Student, routeValue = Area Member
-					return RedirectToAction("Index", "Student", new { area = "Member" });
+					return RedirectToAction("ShowListClass", "Student", new { area = "Member" });
 				}else
 				{
 					//add admin to session
@@ -62,7 +63,8 @@ namespace ClassSurvey.Areas.Authentication.Controllers
 			//lay ra password nhap vao tu form
 			string Password = form["login-password"].ToString().Trim();
 			//tim user co username va password nhu vua nhap
-			User user = db.Users.FirstOrDefault(u => u.Username.Equals(Username) && u.Password.Equals(Password));
+			string hashedPassword = HashPassword.ComputeSha256Hash(Password);
+			User user = db.Users.FirstOrDefault(u => u.Username.Equals(Username) && u.Password.Equals(hashedPassword));
 			if(user != null)
 			{
 				Session["User"] = user;
@@ -84,7 +86,7 @@ namespace ClassSurvey.Areas.Authentication.Controllers
 					Session["Username"] = student.StudentName.ToUpper();
 					//redirect den trang cua sinh vien
 					//actionName = Index, controllerName = Student, routeValue = Area Member
-					return RedirectToAction("Index", "Student", new { area = "Member" });
+					return RedirectToAction("ShowListClass", "Student", new { area = "Member" });
 				}
 				else
 				{

@@ -173,6 +173,7 @@
     <Compile Include="Areas\Member\Controllers\TeacherController.cs" />
     <Compile Include="Areas\Member\MemberAreaRegistration.cs" />
     <Compile Include="Authorization\AuthorizeBusiness.cs" />
+    <Compile Include="Authorization\HashPassword.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2501,7 +2502,6 @@
     <Content Include="Areas\Member\Views\Student\Index.cshtml" />
     <Content Include="Areas\Member\Views\Student\ShowStudentInfo.cshtml" />
     <Content Include="Areas\Member\Views\Student\ShowListClass.cshtml" />
-    <Content Include="Areas\Member\Views\Student\DoSurvey.cshtml" />
     <Content Include="Areas\Authentication\Views\web.config" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Teachers\Create.cshtml" />
@@ -2732,6 +2732,10 @@
     <Content Include="Areas\Member\Views\Shared\_LayoutMember.cshtml" />
     <Content Include="Areas\Member\Views\Shared\_AsideMenuStudentPartialView.cshtml" />
     <Content Include="Areas\Member\Views\Shared\_NavbarStudentPartialView.cshtml" />
+    <Content Include="Areas\Member\Views\Shared\_FooterMemberPartialView.cshtml" />
+    <Content Include="Areas\Member\Views\Student\DoSurvey.cshtml" />
+    <Content Include="Areas\Member\Views\Shared\_AsideMenuTeacherPartialView.cshtml" />
+    <Content Include="Areas\Member\Views\Shared\_HeaderTeacherPartialView.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\demo.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

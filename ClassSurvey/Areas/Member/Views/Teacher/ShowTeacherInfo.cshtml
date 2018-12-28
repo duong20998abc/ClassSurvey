@@ -1,17 +1,72 @@
-﻿
+﻿@model ClassSurvey.Domain.Entities.Teacher
+
 @{
-    Layout = null;
+    ViewBag.Title = "Thông tin giáo viên";
+    Layout = "~/Areas/Member/Views/Shared/_LayoutMember.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ShowTeacherInfo</title>
-</head>
-<body>
-    <div> 
+@Html.Partial("_HeaderTeacherPartialView")
+<div id="page-content" class="container-fluid" style="min-height:70%;">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb mt-3">
+            <li class="breadcrumb-item"><a href="/teacher/list-classes">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Trang cá nhân</li>
+        </ul>
+    </nav>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Partial("_AsideMenuTeacherPartialView")
+        </div>
+        <div class="col-md-9">
+            <h4><br></h4>
+            <div class="card-columns">
+                <div class="card">
+                    <div class="card-header" style="font-weight: bold">
+                        Thông tin cá nhân
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title font-weight-bold">Tên giáo viên</p>
+                        <p class="card-text">@Model.TeacherName</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title font-weight-bold">Văn phòng</p>
+                        <p class="card-text">@Model.Office</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title font-weight-bold">Email</p>
+                        <p class="card-text">@Model.Email</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title font-weight-bold">Điện thoại</p>
+                        <p class="card-text">@Model.Phone</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" style="font-weight: bold">
+                        Đổi mật khẩu
+                    </div>
+                    <div class="card-body">
+                        <form action="/Member/Student/ShowStudentInfo" method="post">
+                            <div class="form-group">
+                                <label for="oldpassword">Mật khẩu cũ</label>
+                                <input type="password" class="form-control" id="oldpassword" name="oldpassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newpassword">Mật khẩu mới</label>
+                                <input type="password" class="form-control" id="newpassword" name="newpassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="repassword">Nhập lại mật khẩu</label>
+                                <input type="password" class="form-control" id="repassword" name="repassword" required>
+                            </div>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+    <br>
+</div>

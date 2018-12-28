@@ -1,8 +1,61 @@
-﻿
+﻿@model ClassSurvey.Domain.Entities.StudentClass
+
 @{
     ViewBag.Title = "ShowSurveyResult";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<div class="content-wrapper" style="padding-left: 10px">
+    <section class="content-header" style="padding-bottom: 10px; border-bottom: 1px solid gray">
+        <h1 style="font-weight: bold; text-align: center">
+            Kết quả đánh giá tổng hợp
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Classes</li>
+        </ol>
+        <h4 style="font-size: 12pt; padding-top: 10px;font-weight:bold">Tên môn học: @Model.Class.ClassName</h4>
+        <h4 style="font-size: 12pt;font-weight:bold">Mã môn học : @Model.Class.ClassCode</h4>
+        <h4 style="font-size: 12pt;font-weight:bold">Số tín chỉ : @Model.Class.NumberOfDegrees</h4>
+        <h4 style="font-size: 12pt;font-weight:bold">Giảng viên: @Model.Teacher.TeacherName</h4>
+    </section>
 
-<h2>ShowSurveyResult</h2>
+    <div class="content">
+        @{
+            if (ViewBag.CountStudentsHaveSurvey == 0)
+            {
+                <h3>Chưa có thông tin khảo sát</h3>
+            }
+            else
+            {
+              
+                <div class="row">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Số thứ tự</th>
+                                <th>Tiêu chí</th>
+                                <th>M</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                
+                                @for (int i = 0; i < ViewBag.CountQuestion; i++)
+                                {
+                                    <tr>
+                                        <td>@(i + 1)</td>
+                                        <td>@ViewBag.SurveyQuestion[@i]</td>
+                                        <td>@ViewBag.Average[@i]</td>
+                                    </tr>
+                                }
+                                
+                        </tbody>
+                    </table>
+                </div>
+                
+            }
+        }
+    </div>
+</div>
+
+
 

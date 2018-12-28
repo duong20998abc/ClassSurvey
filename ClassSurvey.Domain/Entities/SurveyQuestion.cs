@@ -14,6 +14,6 @@ namespace ClassSurvey.Domain.Entities
 		public string Content { get; set; }
 		
 		//1 bo cac survey co cac cau hoi nhu trong bo surveyquestion
-		public ICollection<Survey> Surveys { get; set; }
+		public virtual ICollection<Survey> Surveys { get; set; }
 	}
 }

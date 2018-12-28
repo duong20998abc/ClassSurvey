@@ -112,6 +112,26 @@
     <Compile Include="Migrations\201812261223486_UpdateRegularExpression.Designer.cs">
       <DependentUpon>201812261223486_UpdateRegularExpression.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812270339337_UpdateVirtual.cs" />
+    <Compile Include="Migrations\201812270339337_UpdateVirtual.Designer.cs">
+      <DependentUpon>201812270339337_UpdateVirtual.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812270344266_RemoveForeignKeyAnnotation.cs" />
+    <Compile Include="Migrations\201812270344266_RemoveForeignKeyAnnotation.Designer.cs">
+      <DependentUpon>201812270344266_RemoveForeignKeyAnnotation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812270417484_AddNullableToStudentClass.cs" />
+    <Compile Include="Migrations\201812270417484_AddNullableToStudentClass.Designer.cs">
+      <DependentUpon>201812270417484_AddNullableToStudentClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812271125570_UpdateDatabase.cs" />
+    <Compile Include="Migrations\201812271125570_UpdateDatabase.Designer.cs">
+      <DependentUpon>201812271125570_UpdateDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812271129095_UpdateStringLengthPassword.cs" />
+    <Compile Include="Migrations\201812271129095_UpdateStringLengthPassword.Designer.cs">
+      <DependentUpon>201812271129095_UpdateStringLengthPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -136,6 +156,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812261223486_UpdateRegularExpression.resx">
       <DependentUpon>201812261223486_UpdateRegularExpression.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812270339337_UpdateVirtual.resx">
+      <DependentUpon>201812270339337_UpdateVirtual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812270344266_RemoveForeignKeyAnnotation.resx">
+      <DependentUpon>201812270344266_RemoveForeignKeyAnnotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812270417484_AddNullableToStudentClass.resx">
+      <DependentUpon>201812270417484_AddNullableToStudentClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812271125570_UpdateDatabase.resx">
+      <DependentUpon>201812271125570_UpdateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812271129095_UpdateStringLengthPassword.resx">
+      <DependentUpon>201812271129095_UpdateStringLengthPassword.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

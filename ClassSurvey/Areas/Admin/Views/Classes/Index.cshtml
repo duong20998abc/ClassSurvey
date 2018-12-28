@@ -60,7 +60,8 @@
                             @Html.DisplayFor(modelItem => item.Semester)
                         </td>
                         <td>
-                            @Html.ActionLink("Danh sách học sinh", "ShowStudentsInClass", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" }) 
+                            @Html.ActionLink("Danh sách học sinh", "ShowStudentsInClass", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Kết quả đánh giá", "ShowSurveyResult", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" })
                             @Html.ActionLink("Xóa", "Delete", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-danger" })
                         </td>
                     </tr>

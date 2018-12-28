@@ -246,7 +246,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
 			}
 
 			//lay ra danh sach id cua sinh vien da danh gia mon hoc (co survey result)
-			List<int> listStudentId = db.StudentClasses.Select(s => s.Id).ToList();
+			List<int> listStudentId = @class.StudentClasses.Select(s => s.Id).ToList();
 
 			//dem so luong sinh vien da danh gia
 			ViewBag.CountStudentsHaveSurvey = db.Surveys.Where(s => listStudentId.Any(x => x == s.StudentClassId))

@@ -82,6 +82,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
 			}
             if (ModelState.IsValid)
             {
+				student.Password = HashPassword.ComputeSha256Hash(student.Password);
                 db.Students.Add(student);
                 db.SaveChanges();
 				//lay ra id cua student vua tao
@@ -166,7 +167,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
 				{
 					var student = new Student();
 					student.Username = username;
-					student.Password = password;
+					student.Password = HashPassword.ComputeSha256Hash(password);
 					student.StudentCode = username;
 					student.StudentName = fullname;
 					student.Email = email;
@@ -178,7 +179,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
 					User user = new User()
 					{
 						Username = username,
-						Password = password,
+						Password = HashPassword.ComputeSha256Hash(password),
 						Position = "Student",
 						StudentId = id
 					};
@@ -219,6 +220,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(student).State = EntityState.Modified;
+				student.Password = HashPassword.ComputeSha256Hash(student.Password);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

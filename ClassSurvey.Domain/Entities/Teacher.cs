@@ -18,8 +18,6 @@ namespace ClassSurvey.Domain.Entities
 		public string TeacherName { get; set; }
 
 		[StringLength(100)]
-		[RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z",
-		ErrorMessage = "Please enter correct email address")]
 		public string Email { get; set; }
 
 		[StringLength(50)]
@@ -33,7 +31,7 @@ namespace ClassSurvey.Domain.Entities
 		public string Username { get; set; }
 
 		[Required]
-		[MaxLength(100)]
+		[MaxLength(1000)]
 		public string Password { get; set; }
 
 		public virtual ICollection<StudentClass> StudentClasses { get; set; }

@@ -5,7 +5,8 @@
 }
 
 <div class="content-wrapper" style="padding-left: 20px">
-    <section class="content-header">
+    <section class="content-header" style="border-bottom: 1px solid gray; padding-bottom: 10px">
+        <h1>Kết quả đánh giá</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Classes</li>
@@ -31,13 +32,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for(int k = 0; k < ViewBag.CountQuestion; k++)
+                        @for(int t = 0; t < ViewBag.CountQuestion; t++)
                         {
-                            k = k + 1;
+                            int k = t + 1;
                             <tr>
                                 <td>@k</td>
-                                <td>@ViewBag.SurveyQuestion[@k]</td>
-                                <td>@ViewBag.Points[@k]</td>
+                                <td>@ViewBag.SurveyQuestion[@t]</td>
+                                <td>@ViewBag.Points[@t]</td>
                             </tr>
                         }
                     </tbody>

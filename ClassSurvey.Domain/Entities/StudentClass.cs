@@ -10,19 +10,16 @@ namespace ClassSurvey.Domain.Entities
 {
 	public class StudentClass : BaseEntity
 	{
-		[ForeignKey("Student")]
-		public int StudentId { get; set; }
+		public int? StudentId { get; set; }
 		public virtual Student Student { get; set; }
 
-		[ForeignKey("Class")]
-		public int ClassId { get; set; }
+		public int? ClassId { get; set; }
 		public virtual Class Class { get; set; }
 
-		[ForeignKey("Teacher")]
-		public int TeacherId { get; set; }
+		public int? TeacherId { get; set; }
 		public virtual Teacher Teacher { get; set; }
 
-		public ICollection<Survey> Surveys { get; set; }
+		public virtual ICollection<Survey> Surveys { get; set; }
 
 	}
 }

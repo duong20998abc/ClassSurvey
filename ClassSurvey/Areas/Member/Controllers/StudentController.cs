@@ -27,7 +27,7 @@ namespace ClassSurvey.Areas.Member.Controllers
 				//lay tong so mon hoc
 				ViewBag.CountClass = student.StudentClasses.Count();
 				//lay ra list id cua student thong qua bang StudentClass (select ra studentid)
-				List<int> listStudentId = student.StudentClasses.Select(s => s.StudentId).ToList();
+				List<int?> listStudentId = student.StudentClasses.Select(s => s.StudentId).ToList();
 				//lay ra tong so mon hoc sinh vien da lam khao sat
 				ViewBag.CountSurvey = db.Surveys.Where(s => listStudentId.Any(x => x == s.StudentClassId))
 					.GroupBy(x => x.StudentClassId).Count();
@@ -48,6 +48,35 @@ namespace ClassSurvey.Areas.Member.Controllers
 				return View(student);
 			}
 			return RedirectToAction("Home", "Authentication", new {area = "Authentication" });
+		}
+
+		[HttpPost]
+		public ActionResult ShowStudentInfo(FormCollection form)
+		{
+			User user = Session["User"] as User;
+			string password = form["oldpassword"].ToString();
+			string hashedPassword = HashPassword.ComputeSha256Hash(password);
+			string newPassword = HashPassword.ComputeSha256Hash(form["newpassword"]);
+			if(user != null)
+			{
+				Student student = db.Students.FirstOrDefault(s => s.Id == user.StudentId);
+				if(hashedPassword != user.Password)
+				{
+					ViewBag.BadPassword = "Mật khẩu cũ không đúng. Vui lòng kiểm tra lại";
+					return View(student);
+				}
+				else if(form["newpassword"].ToString().Trim() != form["repassword"].ToString().Trim())
+				{
+					ViewBag.NotTheSamePassword = "Vui lòng kiểm tra lại việc nhập lại mật khẩu";
+					return View(student);
+				}
+				User u = db.Users.FirstOrDefault(us => us.Username == user.Username);
+				u.Password = newPassword;
+				student.Password = newPassword;
+				db.SaveChanges();
+				return View(student);
+			}
+			return RedirectToAction("Index", "Authentication", new { area = "Authentication" });
 		}
 
 		//lay ra danh sach lop ma sinh vien tham gia
@@ -72,14 +101,14 @@ namespace ClassSurvey.Areas.Member.Controllers
 			if(id == null || studentId == null)
 			{
 				//tra ve trang bao loi
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 
 			//lay ra sinh vien co studentId va classId, chi tiet ve mon hoc va sinh vien do
 			StudentClass studentClass = db.StudentClasses.FirstOrDefault(x => x.StudentId == studentId && x.ClassId == id);
 			if(studentClass == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 
 			//kiem tra xem sinh vien da lam khao sat chua
@@ -99,16 +128,16 @@ namespace ClassSurvey.Areas.Member.Controllers
 
 		//ham xu ly khi sinh vien post dap an cho bai khao sat
 		[HttpPost]
-		public ActionResult DoSurvey(FormCollection form, int classId, int studentId)
+		public ActionResult DoSurvey(FormCollection form)
 		{
 			//tong so cau hoi trong bai khao sat
 			ViewBag.CountQuestion = db.SurveyQuestions.ToList().Count();
 			//danh sach cau hoi trong bai khao sat
 			ViewBag.SurveyQuestions = db.SurveyQuestions.Select(sq => sq.Content).ToList();
 			//lay ra id lop tu form co name = classId
-			classId = int.Parse(form["classId"]);
+			int classId = int.Parse(form["classId"]);
 			//lay ra id cua student tu form co name = studentId
-			studentId = int.Parse(form["studentId"]);
+			int studentId = int.Parse(form["studentdetailId"]);
 			//lay ra sinh vien trong lop co classId = classId lay ra tu form
 			StudentClass studentClass = db.StudentClasses.FirstOrDefault(sc => sc.ClassId == classId);
 			if(form.Count < db.SurveyQuestions.ToList().Count() + 2)
