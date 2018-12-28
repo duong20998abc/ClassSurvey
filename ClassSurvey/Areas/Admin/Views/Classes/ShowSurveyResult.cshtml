@@ -27,7 +27,7 @@
             }
             else
             {
-              
+
                 <div class="row">
                     <table class="table table-striped table-hover">
                         <thead>
@@ -35,27 +35,48 @@
                                 <th>Số thứ tự</th>
                                 <th>Tiêu chí</th>
                                 <th>M</th>
+                                <th>sTD</th>
+                                <th>M1</th>
+                                <th>STD1</th>
+                                <th>M2</th>
+                                <th>STD2</th>
                             </tr>
                         </thead>
                         <tbody>
-                                
-                                @for (int i = 0; i < ViewBag.CountQuestion; i++)
-                                {
-                                    <tr>
-                                        <td>@(i + 1)</td>
-                                        <td>@ViewBag.SurveyQuestion[@i]</td>
-                                        <td>@ViewBag.Average[@i]</td>
-                                    </tr>
-                                }
-                                
+
+                            @for (int i = 0; i < ViewBag.CountQuestion; i++)
+                            {
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td>@ViewBag.SurveyQuestion[@i]</td>
+                                    <td>@ViewBag.Average[@i]</td>
+                                    <td>0</td>
+                                    <td>@ViewBag.Average[@i]</td>
+                                    <td>0</td>
+                                    <td>@ViewBag.Average[@i]</td>
+                                    <td>0</td>
+                                </tr>
+                            }
+
                         </tbody>
                     </table>
                 </div>
-                
+
             }
         }
     </div>
+    <label style="font-weight: bold; padding-top: 10px">
+        <p>
+            Ghi chú: </br>
+            - M: giá trị trung bình của các tiêu chí theo lớp học phần</br>
+            - sTD: độ lệch chuẩn của các tiêu chí theo lớp học phần</br>
+            - M1: giá trị trung bình của các tiêu chí dựa trên dữ liệu phản hồi của sinh viên cho các giảng viên dạy cùng môn học với thầy/cô</br>
+            - STD1: độ lệch chuẩn của các tiêu chí dựa trên ý kiến phản hồi của sinh viên cho các giảng viên dạy cùng môn học với thầy/cô</br>
+            - M2: giá trị trung bình của các tiêu chí dựa trên ý kiến phản hồi của sinh viên về các môn học mà thầy/cô đã thực hiện giảng dạy</br>
+            - STD2: độ lệch chuẩn của các tiêu chí dựa trên ý kiến phản hồi của sinh viên cho các giảng viên dạy cùng môn học với thầy/cô
+        </p>
+    </label>
+
+
 </div>
-
-
 

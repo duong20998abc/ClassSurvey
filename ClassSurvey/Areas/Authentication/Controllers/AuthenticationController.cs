@@ -31,7 +31,7 @@ namespace ClassSurvey.Areas.Authentication.Controllers
 					Session["Username"] = teacher.TeacherName.ToUpper();
 					//redirect to teacher page
 					//actionName = Index, controllerName = Teacher, routeValue = Area Member
-					return RedirectToAction("Index", "Teacher", new { area = "Member" });
+					return RedirectToAction("ShowListClasses", "Teacher", new { area = "Member" });
 				}
 				//student
 				else if (user.Position.Equals("Student"))
@@ -76,7 +76,7 @@ namespace ClassSurvey.Areas.Authentication.Controllers
 					Session["Username"] = teacher.TeacherName.ToUpper();
 					//redirect den trang cua giao vien
 					//actionName = Index, controllerName = Teacher, routeValue = Area Member
-					return RedirectToAction("Index", "Teacher", new { area = "Member" });
+					return RedirectToAction("ShowListClasses", "Teacher", new { area = "Member" });
 				}
 				else if (user.Position.Equals("Student"))
 				{

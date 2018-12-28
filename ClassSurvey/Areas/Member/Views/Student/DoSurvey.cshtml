@@ -5,11 +5,11 @@
     Layout = "~/Areas/Member/Views/Shared/_LayoutMember.cshtml";
 }
 
+@Html.Partial("_HeaderMemberPartialView")
 <div id="page-content" class="container-fluid">
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb mt-3">
-            <li class="breadcrumb-item"><a href="../html/main.html">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="#">Các khóa học</a></li>
+            <li class="breadcrumb-item"><a href="/student/list-classes">Trang chủ</a></li>
             <li class="breadcrumb-item active" aria-current="page">@Model.Class.ClassName</li>
         </ul>
     </nav>

@@ -14,11 +14,6 @@ namespace ClassSurvey.Areas.Member
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
-            context.MapRoute(
-                "Member_default",
-                "Member/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
-            );
 
 			context.MapRoute(
 				"StudentIndex",
@@ -71,7 +66,13 @@ namespace ClassSurvey.Areas.Member
 			context.MapRoute(
 				"TeacherListStudents",
 				"teacher/list-students/{id}",
-				new { controller = "Teachers", action = "GetStudentsInClass", id = UrlParameter.Optional }
+				new { controller = "Teacher", action = "GetStudentsInClass", id = UrlParameter.Optional }
+			);
+
+			context.MapRoute(
+				"Member_default",
+				"Member/{controller}/{action}/{id}",
+				new { action = "Index", id = UrlParameter.Optional }
 			);
 		}
     }

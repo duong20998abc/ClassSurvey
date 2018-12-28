@@ -45,6 +45,36 @@ namespace ClassSurvey.Areas.Member.Controllers
 			return View();
 		}
 
+		[HttpPost]
+		public ActionResult ShowTeacherInfo(FormCollection form)
+		{
+			User user = Session["User"] as User;
+			string password = form["oldpassword"].ToString();
+			string hashedPassword = HashPassword.ComputeSha256Hash(password);
+			string newPassword = HashPassword.ComputeSha256Hash(form["newpassword"]);
+			if (user != null)
+			{
+				Teacher teacher = db.Teachers.FirstOrDefault(s => s.Id == user.TeacherId);
+				if (hashedPassword != user.Password)
+				{
+					Response.Write("<script>alert('Mật khẩu cũ không đúng. Vui lòng kiểm tra lại')</script>");
+					return View(teacher);
+				}
+				else if (form["newpassword"].ToString().Trim() != form["repassword"].ToString().Trim())
+				{
+					Response.Write("<script>alert('Mật khẩu mới không trùng nhau. Vui lòng kiểm tra lại')</script>");
+					return View(teacher);
+				}
+				User u = db.Users.FirstOrDefault(us => us.Username == user.Username);
+				u.Password = newPassword;
+				teacher.Password = newPassword;
+				db.SaveChanges();
+				Response.Write("<script>alert('Thay đổi mật khẩu thành công')</script>");
+				return View(teacher);
+			}
+			return RedirectToAction("Index", "Authentication", new { area = "Authentication" });
+		}
+
 		public ActionResult ShowListClasses()
 		{
 			//lay ra user tu session
@@ -54,6 +84,8 @@ namespace ClassSurvey.Areas.Member.Controllers
 			//Su dung IEnumerable, thay cho List (neu dung List phai ToList())
 			IEnumerable<StudentClass> studentClasses = db.StudentClasses.Where(sc => sc.TeacherId == user.TeacherId)
 				.GroupBy(c => c.ClassId).Select(s => s.FirstOrDefault());
+			int teacherId = db.Teachers.FirstOrDefault(t => t.Id == user.TeacherId).Id;
+			
 			return View(studentClasses);
 		}
 

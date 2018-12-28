@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace ClassSurvey.Areas.Member.Controllers
 {
@@ -62,18 +63,19 @@ namespace ClassSurvey.Areas.Member.Controllers
 				Student student = db.Students.FirstOrDefault(s => s.Id == user.StudentId);
 				if(hashedPassword != user.Password)
 				{
-					ViewBag.BadPassword = "Mật khẩu cũ không đúng. Vui lòng kiểm tra lại";
+					Response.Write("<script>alert('Mật khẩu cũ không đúng. Vui lòng kiểm tra lại')</script>");
 					return View(student);
 				}
 				else if(form["newpassword"].ToString().Trim() != form["repassword"].ToString().Trim())
 				{
-					ViewBag.NotTheSamePassword = "Vui lòng kiểm tra lại việc nhập lại mật khẩu";
+					Response.Write("<script>alert('Mật khẩu mới không trùng nhau. Vui lòng kiểm tra lại')</script>");
 					return View(student);
 				}
 				User u = db.Users.FirstOrDefault(us => us.Username == user.Username);
 				u.Password = newPassword;
 				student.Password = newPassword;
 				db.SaveChanges();
+				Response.Write("<script>alert('Thay đổi mật khẩu thành công')</script>");
 				return View(student);
 			}
 			return RedirectToAction("Index", "Authentication", new { area = "Authentication" });
@@ -156,6 +158,7 @@ namespace ClassSurvey.Areas.Member.Controllers
 			}
 			StudentClass stu = db.StudentClasses.FirstOrDefault(sc => sc.Id == studentId);
 			db.SaveChanges();
+			Response.Write("<script>alert('Đánh giá môn học thành công')</script>");
 			return RedirectToAction("ShowListClass");
 		}
     }

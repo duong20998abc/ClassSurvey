@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<ClassSurvey.Domain.Entities.StudentClass>
 
 @{
-    ViewBag.Title = "Trang chủ sinh viên";
+    ViewBag.Title = "Trang chủ giáo viên";
     Layout = "~/Areas/Member/Views/Shared/_LayoutMember.cshtml";
 }
 
+@Html.Partial("_HeaderTeacherPartialView")
 <div id="page-content" class="container-fluid">
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb mt-3">
-            <li class="breadcrumb-item active" aria-current="page"><a href="/teacher/home">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/teacher/list-classes">Trang chủ</a></li>
         </ul>
     </nav>
     <div class="row">
@@ -33,20 +34,18 @@
                                     <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>@Html.DisplayFor(modelItem => item.Class.ClassCode)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Class.ClassName)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Class.NumberOfDegrees)</td>
-                                        <td>Học kỳ @Html.DisplayFor(modelItem => item.Class.Semester)</td>
-                                        <td>
-                                            @Html.ActionLink("Khảo sát môn học", "DoSurvey", new { id = item.ClassId, studentId = item.StudentId }, htmlAttributes: new { @class = "btn btn-primary" })
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
+                            <tbody>               
+                                <tr>
+                                    <td>@Html.DisplayFor(model => model.FirstOrDefault().Class.ClassCode)</td>
+                                    <td>@Html.DisplayFor(model => model.FirstOrDefault().Class.ClassName)</td>
+                                    <td>@Html.DisplayFor(model => model.FirstOrDefault().Class.NumberOfDegrees)</td>
+                                    <td>Học kỳ @Html.DisplayFor(model => model.FirstOrDefault().Class.Semester)</td>
+                                    <td>
+                                        @Html.ActionLink("Danh sách sinh viên", "GetStudentsInClass", new { id = Model.FirstOrDefault().ClassId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                        @Html.ActionLink("Kết quả đánh giá", "ShowSurveyResult", new { id = Model.FirstOrDefault().ClassId }, htmlAttributes: new { @class = "btn btn-primary" })
+                                    </td>
+                                </tr>
+                             </tbody>
                         </table>
                     </div>
                 </li>
