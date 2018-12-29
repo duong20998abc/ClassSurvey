@@ -7,6 +7,8 @@ using System.Web;
 
 namespace ClassSurvey.Domain.Entities
 {
+	//BaseEntity
+	//All column share BaseEntity Components
 	public class BaseEntity
 	{
 		public BaseEntity()

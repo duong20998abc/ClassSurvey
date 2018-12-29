@@ -46,18 +46,17 @@
 
                             @for (int i = 0; i < ViewBag.CountQuestion; i++)
                             {
-                                <tr>
-                                    <td>@(i + 1)</td>
-                                    <td>@ViewBag.SurveyQuestion[@i]</td>
-                                    <td>@ViewBag.Average[@i]</td>
-                                    <td>0</td>
-                                    <td>@ViewBag.Average[@i]</td>
-                                    <td>0</td>
-                                    <td>@ViewBag.Average[@i]</td>
-                                    <td>0</td>
-                                </tr>
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <td>@ViewBag.SurveyQuestion[@i]</td>
+                                <td>@Math.Round(@ViewBag.Average[@i], 2)</td>
+                                <td>@Math.Round(ViewBag.Std[@i], 2)</td>
+                                <td>@Math.Round(@ViewBag.AverageAll[@i], 2)</td>
+                                <td>@Math.Round(ViewBag.StdAll[@i], 2)</td>
+                                <td>@Math.Round(@ViewBag.Average[@i], 2)</td>
+                                <td>@Math.Round(ViewBag.Std[@i], 2)</td>
+                            </tr>
                             }
-
                         </tbody>
                     </table>
                 </div>

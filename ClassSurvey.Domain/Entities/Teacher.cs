@@ -6,10 +6,13 @@ using System.Web;
 
 namespace ClassSurvey.Domain.Entities
 {
+	//Teacher(Entity)
 	public class Teacher : BaseEntity
 	{
+		//constructor
 		public Teacher()
 		{
+			//default info
 			Phone = "0123456789";
 			Office = "404E3-UET-VNU";
 		}

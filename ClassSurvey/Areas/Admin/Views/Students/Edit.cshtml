@@ -91,10 +91,10 @@
             <div class="form-group">
                 <div class="col-md-2"></div>
                 <div class="col-md-1">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Save" class="btn btn-success" />
                 </div>
                 <div style="padding-left: 20px" class="col-md-9">
-                    <a href="/student/list-students"><button class="btn btn-warning">Quay về trang danh sách sinh viên</button></a>
+                    @Html.ActionLink("Quay về trang danh sách sinh viên", "Index", "", htmlAttributes: new { @class = "btn btn-warning" })
                 </div>
             </div>
         </div>

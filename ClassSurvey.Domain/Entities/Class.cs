@@ -7,6 +7,7 @@ using System.Web;
 
 namespace ClassSurvey.Domain.Entities
 {
+	//Class Table (Entity)
 	public class Class : BaseEntity
 	{
 		[Required]

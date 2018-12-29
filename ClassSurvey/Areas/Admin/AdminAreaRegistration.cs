@@ -2,6 +2,7 @@
 
 namespace ClassSurvey.Areas.Admin
 {
+	//RouteConfig For Admin Page
     public class AdminAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
@@ -23,7 +24,7 @@ namespace ClassSurvey.Areas.Admin
 
 			context.MapRoute(
 				"AdminListStudents",
-				"student/list-students/{id}",
+				"student/list-students",
 				new { controller = "Students", action = "Index", Id = UrlParameter.Optional }
 			);
 
@@ -59,7 +60,7 @@ namespace ClassSurvey.Areas.Admin
 
 			context.MapRoute(
 				"AdminListTeachers",
-				"teacher/list-teachers/{id}",
+				"teacher/list-teachers",
 				new { controller = "Teachers", action = "Index", Id = UrlParameter.Optional }
 			);
 
@@ -96,7 +97,7 @@ namespace ClassSurvey.Areas.Admin
 
 			context.MapRoute(
 				"AdminListClasses",
-				"class/list-classes/{id}",
+				"class/list-classes",
 				new { controller = "Classes", action = "Index", Id = UrlParameter.Optional }
 			);
 
@@ -126,7 +127,7 @@ namespace ClassSurvey.Areas.Admin
 
 			context.MapRoute(
 				"AdminSurveyList",
-				"survey/list-criteria/{id}",
+				"survey/list-criteria",
 				new { controller = "Surveys", action = "Index", Id = UrlParameter.Optional }
 			);
 

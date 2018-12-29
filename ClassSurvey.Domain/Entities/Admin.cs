@@ -6,6 +6,7 @@ using System.Web;
 
 namespace ClassSurvey.Domain.Entities
 {
+	//Admin Column
 	public class Admin : BaseEntity
 	{
 		[Required]

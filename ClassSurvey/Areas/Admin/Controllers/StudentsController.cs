@@ -16,6 +16,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
 	[AuthorizeBusiness]
     public class StudentsController : Controller
     {
+		//get DB
         private ClassSurveyDbContext db = new ClassSurveyDbContext();
 
         // GET: Students
@@ -24,7 +25,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
             return View(db.Students.ToList());
         }
 
-		//phuong thuc tim kiem theo ten hoc sinh
+		//find students by searching
 		[HttpPost]
 		public ActionResult Index(FormCollection form)
 		{
@@ -45,16 +46,16 @@ namespace ClassSurvey.Areas.Admin.Controllers
 		}
 
         // GET: Students/Details/5
-		//lay ra chi tiet sinh vien
+		//get details of a student
         public ActionResult Details(int? id)
         {
-			//khong ton tai id => tra ve Bad request
+			//not found id
             if (id == null)
             {
 				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
             Student student = db.Students.Find(id);
-			//Khong tim thay sinh vien co Id => HttpNotFound
+			//not found student
             if (student == null)
             {
 				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
@@ -77,16 +78,20 @@ namespace ClassSurvey.Areas.Admin.Controllers
         {
 			if(db.Students.Any(x => x.Username == student.Username))
 			{
+				//if username exists in DB before
 				ViewBag.DuplicateError = "Username này đã tồn tại. Vui lòng nhập tên khác";
 				return View(student);
 			}
+			//if all validation is accepted
             if (ModelState.IsValid)
             {
+				//hash password before adding to DB
 				student.Password = HashPassword.ComputeSha256Hash(student.Password);
                 db.Students.Add(student);
                 db.SaveChanges();
-				//lay ra id cua student vua tao
+				//get student added ID
 				int id = db.Students.Max(x => x.Id);
+				//add user
 				User user = new User()
 				{
 					Username = student.Username,
@@ -115,25 +120,33 @@ namespace ClassSurvey.Areas.Admin.Controllers
 			return RedirectToAction("Index","Students", new { area = "Admin"});
 		}
 
+		//get data to above function
 		public bool ImportData(out int count, ExcelPackage package)
 		{
 			count = 0;
 			var result = false;
 			try
 			{
+				//data start at column 1 and row 2
 				int startColumn = 1;
 				int startRow = 2;
 				ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
 				object data = null;
+				//get DB
 				ClassSurveyDbContext db = new ClassSurveyDbContext();
 
 				do
 				{
 					data = worksheet.Cells[startRow, startColumn].Value;
+					//get Username
 					object Username = worksheet.Cells[startRow, startColumn + 1].Value;
+					//get password
 					object Password = worksheet.Cells[startRow, startColumn + 2].Value;
+					//get Fullname
 					object Fullname = worksheet.Cells[startRow, startColumn + 3].Value;
+					//get Email
 					object Email = worksheet.Cells[startRow, startColumn + 4].Value;
+					//get ClassByGrade
 					object ClassByGrade = worksheet.Cells[startRow, startColumn + 5].Value;
 
 					if (data != null)
@@ -158,15 +171,20 @@ namespace ClassSurvey.Areas.Admin.Controllers
 			return result;
 		}
 
+		//check ability to save new student from excel
 		public bool SaveStudent(string username, string password, string fullname, string email, string classbygrade, ClassSurveyDbContext db)
 		{
 			var result = false;
 			try
 			{
+				//save student
+				//if students exist before, then not import again
+				//just import new student not exists in system
 				if (db.Students.Where(x => x.Username.Equals(username)).Count() == 0)
 				{
 					var student = new Student();
 					student.Username = username;
+					//hash password before adding
 					student.Password = HashPassword.ComputeSha256Hash(password);
 					student.StudentCode = username;
 					student.StudentName = fullname;
@@ -176,6 +194,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
 					db.SaveChanges();
 
 					int id = db.Students.Max(x => x.Id);
+					//add new user
 					User user = new User()
 					{
 						Username = username,

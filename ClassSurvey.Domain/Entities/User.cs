@@ -6,6 +6,7 @@ using System.Web;
 
 namespace ClassSurvey.Domain.Entities
 {
+	//User (Entity)
 	public class User : BaseEntity
 	{
 		[StringLength(256)]

@@ -7,6 +7,7 @@ using System.Web;
 
 namespace ClassSurvey.Domain.Entities
 {
+	//Survey (Entity)
 	public class Survey : BaseEntity
 	{
 		// 1 bo cau hoi cho nhieu survey

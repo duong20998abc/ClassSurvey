@@ -6,10 +6,12 @@ using System.Web;
 
 namespace ClassSurvey.Domain.Entities
 {
+	//Student (Entity)
 	public class Student : BaseEntity
 	{
 		[Required]
 		[StringLength(256)]
+		[RegularExpression("^1[0-9]{7}$", ErrorMessage = "StudentCode has type of 8-digit starting with 1")]
 		public string StudentCode { get; set; }
 
 		[Required]

@@ -96,7 +96,11 @@ namespace ClassSurvey.Areas.Authentication.Controllers
 					//actionName = Index, controllerName = Home, routeValue = Area Admin
 					return RedirectToAction("Index", "Home", new { area = "Admin" });
 				}
+			}else
+			{
+				Response.Write("<script>alert('Tên đăng nhập hoặc mật khẩu không chính xác')</script>");
 			}
+			
 			return View();
 		}
 
@@ -106,6 +110,7 @@ namespace ClassSurvey.Areas.Authentication.Controllers
 		{
 			Session.Remove("User");
 			Session.Remove("Username");
+			Response.Write("<script>alert('Bạn đã đăng xuất thành công')</script>");
 			return RedirectToAction("Home","Authentication", new {area = "Authentication" });
 		}
 

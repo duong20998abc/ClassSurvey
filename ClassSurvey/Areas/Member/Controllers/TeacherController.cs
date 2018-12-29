@@ -16,15 +16,15 @@ namespace ClassSurvey.Areas.Member.Controllers
 		// GET: Member/Teacher
 		public ActionResult Index()
 		{
-			//lay ra user tu session
+			//get user
 			User user = Session["User"] as User;
-			//neu ton tai user
+			//if user exists
 			if (user != null)
 			{
-				//Dem so luong sinh vien giao vien dang day
+				//count students in class
 				ViewBag.CountStudents = db.Teachers.FirstOrDefault(t => t.Id == user.TeacherId)
 				.StudentClasses.Count();
-				//Dem so lop giao vien day
+				//count number of classes teacher is responsible for
 				ViewBag.CountClasses = db.Teachers.FirstOrDefault(t => t.Id == user.TeacherId)
 				.StudentClasses.GroupBy(sc => sc.TeacherId).Count();
 				return View();
@@ -34,11 +34,12 @@ namespace ClassSurvey.Areas.Member.Controllers
 
 		public ActionResult ShowTeacherInfo()
 		{
-			//lay ra user tu session
+			//get user
 			User user = Session["User"] as User;
-			//neu ton tai user
+			//if user exists
 			if (user != null)
 			{
+				//get teacher
 				Teacher teacher = db.Teachers.FirstOrDefault(t => t.Id == user.TeacherId);
 				return View(teacher);
 			}
@@ -48,24 +49,33 @@ namespace ClassSurvey.Areas.Member.Controllers
 		[HttpPost]
 		public ActionResult ShowTeacherInfo(FormCollection form)
 		{
+			//get user
 			User user = Session["User"] as User;
+			//get old password from form 
 			string password = form["oldpassword"].ToString();
+			//hash old password
 			string hashedPassword = HashPassword.ComputeSha256Hash(password);
+			//get new password from form
 			string newPassword = HashPassword.ComputeSha256Hash(form["newpassword"]);
 			if (user != null)
 			{
+				//get teacher
 				Teacher teacher = db.Teachers.FirstOrDefault(s => s.Id == user.TeacherId);
+				//old password fail
 				if (hashedPassword != user.Password)
 				{
 					Response.Write("<script>alert('Mật khẩu cũ không đúng. Vui lòng kiểm tra lại')</script>");
 					return View(teacher);
 				}
+				//rewrite new password fail
 				else if (form["newpassword"].ToString().Trim() != form["repassword"].ToString().Trim())
 				{
 					Response.Write("<script>alert('Mật khẩu mới không trùng nhau. Vui lòng kiểm tra lại')</script>");
 					return View(teacher);
 				}
+				//get username
 				User u = db.Users.FirstOrDefault(us => us.Username == user.Username);
+				//update new password
 				u.Password = newPassword;
 				teacher.Password = newPassword;
 				db.SaveChanges();
@@ -77,10 +87,10 @@ namespace ClassSurvey.Areas.Member.Controllers
 
 		public ActionResult ShowListClasses()
 		{
-			//lay ra user tu session
+			//get user
 			User user = Session["User"] as User;
 
-			//lay ra danh sach sinh vien trong lop giao vien day
+			//get list students in class
 			//Su dung IEnumerable, thay cho List (neu dung List phai ToList())
 			IEnumerable<StudentClass> studentClasses = db.StudentClasses.Where(sc => sc.TeacherId == user.TeacherId)
 				.GroupBy(c => c.ClassId).Select(s => s.FirstOrDefault());
@@ -89,73 +99,111 @@ namespace ClassSurvey.Areas.Member.Controllers
 			return View(studentClasses);
 		}
 
-		//lay ra danh sach sinh vien trong 1 lop hoc phan
+		//get students in 1 class
 		public ActionResult GetStudentsInClass(int? id)
 		{
-			//neu ko ton tai id
+			//if id not exist
 			if (id == null)
 			{
 				return HttpNotFound();
 			}
-			//lay ra class co Id = id
+			//get class
 			Class @class = db.Classes.FirstOrDefault(c => c.Id == id);
-			//neu ko ton tai class
+			//if class not exist
 			if (@class == null)
 			{
 				return HttpNotFound();
 			}
 
-			//lay ra danh sach hoc sinh tuong ung voi lop hoc phan (va ca giao vien day lop do)
+			//get students in that class
 			IEnumerable<StudentClass> listStudentInClass = @class.StudentClasses.ToList();
 			return View(listStudentInClass);
 		}
 
-		//In ra ket qua cua cuoc khao sat
-		//giong ham trong ClassesController (admin)
+		//Show result of Survey with class
 		public ActionResult ShowSurveyResult(int? id)
 		{
+			//id not exist
 			if (id == null)
 			{
 				return HttpNotFound();
 			}
-			//find ra class co Id = id
+			//find class
 			Class @class = db.Classes.FirstOrDefault(c => c.Id == id);
 			if (@class == null)
 			{
 				return HttpNotFound();
 			}
 
-			//lay ra danh sach id cua sinh vien da danh gia mon hoc (co survey result)
-			List<int> listStudentId = db.StudentClasses.Select(s => s.Id).ToList();
+			//get list id of students have done survey
+			List<int> listStudentId = @class.StudentClasses.Select(s => s.Id).ToList();
 
-			//dem so luong sinh vien da danh gia
+			//count students have done survey
 			ViewBag.CountStudentsHaveSurvey = db.Surveys.Where(s => listStudentId.Any(x => x == s.StudentClassId))
 				.ToList().Count();
 
-			//lay ra sinh vien dau tien trong danh sach sinh vien trong lop
+			//get first student in list students in class
 			StudentClass student = db.StudentClasses.First(x => x.ClassId == id);
 
-			//lay ra tong so sinh vien trong lop
+			//number of students in class
 			ViewBag.CountStudentsInClass = db.Classes.FirstOrDefault(s => s.Id == id).StudentClasses
 				.ToList().Count();
 
-			//khong co sinh vien duoc tim thay
+			//not found student
 			if (student == null)
 			{
-				return HttpNotFound();
+				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 
-			/*tinh diem danh gia trung binh qua cac cuoc khao sat cua sinh vien
-			doi voi cac cau hoi trong bang khao sat*/
-
+			//average survey result according to students doing survey in one class
+			//can be understood average in 1 class
+			//take data from Surveys table
 			ViewBag.Average = db.Surveys.Where(s => listStudentId.Any(x => x == s.StudentClassId))
 				.GroupBy(x => x.SurveyQuestionId)
 				.Select(x => x.Average(k => k.Result)).ToList();
 
-			//lay ra danh sach cau hoi khao sat
-			ViewBag.SurveyQuestion = db.SurveyQuestions.Select(sc => sc.Content).ToList();
+			//get list survey result to each criterion
+			ViewBag.Points = db.Surveys.Where(s => listStudentId.Any(x => x == s.StudentClassId))
+				.GroupBy(x => x.SurveyQuestionId)
+				.Select(s => s.Select(k => k.Result)).ToList();
 
-			//lay ra tong so cau hoi trong bai khao sat
+			//get standard deviation of survey criteria
+			List<int> listPointsEachStudent = new List<int>();
+			List<double> listSTD = new List<double>();
+			foreach(var item in ViewBag.Points)
+			{
+				listPointsEachStudent.Clear();
+				listPointsEachStudent = item;
+				double avg = listPointsEachStudent.Average();
+				double sumDif = listPointsEachStudent.Select(val => (val - avg) * (val - avg)).Sum();
+				double std = Math.Sqrt(sumDif / (listPointsEachStudent.Count - 1));
+				listSTD.Add(std);
+			}
+
+			ViewBag.Std = listSTD;
+
+			//average survey result according to students doing survey in all classes
+			//can be understood average in all classes
+			ViewBag.AverageAll = db.Surveys.GroupBy(s => s.SurveyQuestionId).Select(s => s.Average(k => k.Result)).ToList();
+
+			//get standard deviation of survey criteria in all classes
+			ViewBag.PointsAll = db.Surveys.GroupBy(s => s.SurveyQuestionId).Select(s => s.Select(k => k.Result)).ToList();
+			List<double> listSTDAll = new List<double>();
+			foreach (var item in ViewBag.PointsAll)
+			{
+				listPointsEachStudent.Clear();
+				listPointsEachStudent = item;
+				double avg = listPointsEachStudent.Average();
+				double sumDif = listPointsEachStudent.Select(val => (val - avg) * (val - avg)).Sum();
+				double std = Math.Sqrt(sumDif / (listPointsEachStudent.Count - 1));
+				listSTDAll.Add(std);
+			}
+
+			//get list standard deviation to show in view
+			ViewBag.StdAll = listSTDAll;
+			//get survey content
+			ViewBag.SurveyQuestion = db.SurveyQuestions.Select(sc => sc.Content).ToList();
+			//number of criteria in survey
 			ViewBag.CountQuestion = db.SurveyQuestions.ToList().Count();
 			return View(student);
 		}

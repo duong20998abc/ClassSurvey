@@ -7,6 +7,7 @@ using System.Web;
 
 namespace ClassSurvey.Domain.Entities
 {
+	//Content of Survey (Entity)
 	public class SurveyQuestion : BaseEntity
 	{
 		[Required]

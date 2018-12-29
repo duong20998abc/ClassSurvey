@@ -27,11 +27,14 @@ namespace ClassSurvey.Areas.Admin.Controllers
 		// GET: Teachers/Details/5
 		public ActionResult Details(int? id)
         {
+			//not found id
             if (id == null)
             {
 				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
             Teacher teacher = db.Teachers.Find(id);
+
+			//not found teacher
             if (teacher == null)
             {
 				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
@@ -54,9 +57,12 @@ namespace ClassSurvey.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+				//hash password before adding
 				teacher.Password = HashPassword.ComputeSha256Hash(teacher.Password);
-                db.Teachers.Add(teacher);
+				db.Teachers.Add(teacher);
+				db.SaveChanges();
 				int id = db.Teachers.Max(t => t.Id);
+				//add new user
 				User user = new User()
 				{
 					Username = teacher.Username,
@@ -107,11 +113,13 @@ namespace ClassSurvey.Areas.Admin.Controllers
         // GET: Teachers/Delete/5
         public ActionResult Delete(int? id)
         {
+			//not found id
             if (id == null)
             {
 				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
             Teacher teacher = db.Teachers.Find(id);
+			//not found teacher
             if (teacher == null)
             {
 				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
@@ -130,12 +138,15 @@ namespace ClassSurvey.Areas.Admin.Controllers
 				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 			User user = db.Users.FirstOrDefault(u => u.TeacherId == teacher.Id);
+			//remove teacher as well as user
             db.Teachers.Remove(teacher);
 			db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
+		//import teacher from file xlsx
+		//method HttpPost
 		[HttpPost]
 		public ActionResult ImportTeacherFromExcel (HttpPostedFileBase file)
 		{
@@ -148,12 +159,14 @@ namespace ClassSurvey.Areas.Admin.Controllers
 			return RedirectToAction("Index", "Teachers", new { area = "Admin" });
 		}
 
+		//get data for above function
 		public bool ImportData(out int count, ExcelPackage package)
 		{
 			var result = false;
 			count = 0;
 			try
 			{
+				//teacher info start at column 1 and row 2 in file excel
 				int startColumn = 1;
 				int startRow = 2;
 				ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
@@ -163,11 +176,16 @@ namespace ClassSurvey.Areas.Admin.Controllers
 				do
 				{
 					data = worksheet.Cells[startRow, startColumn].Value;
+					//get username
 					object Username = worksheet.Cells[startRow, startColumn + 1].Value;
+					//get password
 					object Password = worksheet.Cells[startRow, startColumn + 2].Value;
+					//get teacher name
 					object Name = worksheet.Cells[startRow, startColumn + 3].Value;
+					//get email
 					object Email = worksheet.Cells[startRow, startColumn + 4].Value;
 
+					//if exists data
 					if(data != null)
 					{
 						var isImported = SaveTeacher(Username.ToString(), Password.ToString(), 
@@ -190,15 +208,19 @@ namespace ClassSurvey.Areas.Admin.Controllers
 			return result;
 		}
 
+		//check if we can save new teachers
 		public bool SaveTeacher(string username, string password, string name, string email, ClassSurveyDbContext db)
 		{
 			var result = false;
 			try
 			{
+				//if teacher not exists in system before
+				//just add new teachers when they dont exist in system 
 				if(db.Teachers.Where(x => x.Username.Equals(username)).Count() == 0)
 				{
 					var teacher = new Teacher();
 					teacher.Username = username;
+					//hash password before adding
 					teacher.Password = HashPassword.ComputeSha256Hash(password);
 					teacher.TeacherName = name;
 					teacher.Email = email;
@@ -207,6 +229,7 @@ namespace ClassSurvey.Areas.Admin.Controllers
 					db.SaveChanges();
 
 					int id = db.Teachers.Max(x => x.Id);
+					//add new user
 					User user = new User() {
 						Username = username,
 						Password = HashPassword.ComputeSha256Hash(password),

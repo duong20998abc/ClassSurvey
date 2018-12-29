@@ -68,10 +68,10 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-actions no-color">
-                <input type="submit" value="Xóa" class="btn btn-danger" /> |
-                <a href="/student/list-students">Quay về trang danh sách sinh viên</a>
-            </div>
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-danger" /> |
+            @Html.ActionLink("Quay về trang danh sách sinh viên", "Index", "", htmlAttributes: new { @class = "btn btn-warning" })
+        </div>
         }
     </div>
 </div>

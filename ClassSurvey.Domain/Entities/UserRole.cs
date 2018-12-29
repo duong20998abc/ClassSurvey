@@ -5,6 +5,7 @@ using System.Web;
 
 namespace ClassSurvey.Domain.Entities
 {
+	//Roles of users (Entity)
 	public class UserRole : BaseEntity
 	{
 		public string Position { get; set; }

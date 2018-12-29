@@ -7,6 +7,8 @@ using System.Web;
 
 namespace ClassSurvey.Authorization
 {
+	//Hash Password Function
+	//Sha256
 	public class HashPassword
 	{
 		public static string ComputeSha256Hash(string rawData)

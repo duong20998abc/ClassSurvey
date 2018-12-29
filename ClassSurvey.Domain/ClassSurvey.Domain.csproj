@@ -132,6 +132,30 @@
     <Compile Include="Migrations\201812271129095_UpdateStringLengthPassword.Designer.cs">
       <DependentUpon>201812271129095_UpdateStringLengthPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812291545434_AddRegularExpressionToEmail.cs" />
+    <Compile Include="Migrations\201812291545434_AddRegularExpressionToEmail.Designer.cs">
+      <DependentUpon>201812291545434_AddRegularExpressionToEmail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812291557164_UpdateRegularExpressionToEmail.cs" />
+    <Compile Include="Migrations\201812291557164_UpdateRegularExpressionToEmail.Designer.cs">
+      <DependentUpon>201812291557164_UpdateRegularExpressionToEmail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812291600026_UpdateRegularExpressionToEmail2.cs" />
+    <Compile Include="Migrations\201812291600026_UpdateRegularExpressionToEmail2.Designer.cs">
+      <DependentUpon>201812291600026_UpdateRegularExpressionToEmail2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812291602290_UpdateRegularExpressionToEmail3.cs" />
+    <Compile Include="Migrations\201812291602290_UpdateRegularExpressionToEmail3.Designer.cs">
+      <DependentUpon>201812291602290_UpdateRegularExpressionToEmail3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812291606571_UpdateRegularExpressionToEmail4.cs" />
+    <Compile Include="Migrations\201812291606571_UpdateRegularExpressionToEmail4.Designer.cs">
+      <DependentUpon>201812291606571_UpdateRegularExpressionToEmail4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812291609127_RemoveRegularExpressionEmail.cs" />
+    <Compile Include="Migrations\201812291609127_RemoveRegularExpressionEmail.Designer.cs">
+      <DependentUpon>201812291609127_RemoveRegularExpressionEmail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -171,6 +195,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812271129095_UpdateStringLengthPassword.resx">
       <DependentUpon>201812271129095_UpdateStringLengthPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812291545434_AddRegularExpressionToEmail.resx">
+      <DependentUpon>201812291545434_AddRegularExpressionToEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812291557164_UpdateRegularExpressionToEmail.resx">
+      <DependentUpon>201812291557164_UpdateRegularExpressionToEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812291600026_UpdateRegularExpressionToEmail2.resx">
+      <DependentUpon>201812291600026_UpdateRegularExpressionToEmail2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812291602290_UpdateRegularExpressionToEmail3.resx">
+      <DependentUpon>201812291602290_UpdateRegularExpressionToEmail3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812291606571_UpdateRegularExpressionToEmail4.resx">
+      <DependentUpon>201812291606571_UpdateRegularExpressionToEmail4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812291609127_RemoveRegularExpressionEmail.resx">
+      <DependentUpon>201812291609127_RemoveRegularExpressionEmail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

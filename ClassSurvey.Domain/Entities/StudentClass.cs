@@ -8,6 +8,7 @@ using System.Web;
 
 namespace ClassSurvey.Domain.Entities
 {
+	//Column between student and class, can get teacher here too
 	public class StudentClass : BaseEntity
 	{
 		public int? StudentId { get; set; }

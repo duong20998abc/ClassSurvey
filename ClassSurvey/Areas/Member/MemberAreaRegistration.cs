@@ -2,6 +2,7 @@
 
 namespace ClassSurvey.Areas.Member
 {
+	//Route Config for Member Page
     public class MemberAreaRegistration : AreaRegistration 
     {
         public override string AreaName 

@@ -17,19 +17,19 @@ namespace ClassSurvey.Areas.Member.Controllers
 		// GET: Member/Student
 		public ActionResult Index()
 		{
-			//lay ra user tu session
+			//get user from session
 			User user = Session["User"] as User;
 
-			//check user ton tai
+			//check user exists
 			if (user != null)
 			{
-				//lay ra student co Id trung voi studentId cua user
+				//get student has Id equals to user studentId
 				Student student = db.Students.FirstOrDefault(s => s.Id == user.StudentId);
-				//lay tong so mon hoc
+				//number of classes
 				ViewBag.CountClass = student.StudentClasses.Count();
-				//lay ra list id cua student thong qua bang StudentClass (select ra studentid)
+				//get listStudentId
 				List<int?> listStudentId = student.StudentClasses.Select(s => s.StudentId).ToList();
-				//lay ra tong so mon hoc sinh vien da lam khao sat
+				//get number of students have survey
 				ViewBag.CountSurvey = db.Surveys.Where(s => listStudentId.Any(x => x == s.StudentClassId))
 					.GroupBy(x => x.StudentClassId).Count();
 				return View();
@@ -37,40 +37,50 @@ namespace ClassSurvey.Areas.Member.Controllers
 			return RedirectToAction("Home", "Authentication", new { area = "Authentication" });
 		}
 
-		//lay ra thong tin cua sinh vien
+		//get student info
 		public ActionResult ShowStudentInfo()
 		{
-			//lay ra user tu session
+			//get user from session
 			User user = Session["User"] as User;
 			if(user != null)
 			{
-				//lay ra sinh vien co Id = studentId cua user
+				//get student when id == user's studentID
 				Student student = db.Students.FirstOrDefault(s => s.Id == user.StudentId);
 				return View(student);
 			}
 			return RedirectToAction("Home", "Authentication", new {area = "Authentication" });
 		}
 
+		//update password in form
 		[HttpPost]
 		public ActionResult ShowStudentInfo(FormCollection form)
 		{
+			//get user from session
 			User user = Session["User"] as User;
+			//input old password
 			string password = form["oldpassword"].ToString();
+			//hash old password
 			string hashedPassword = HashPassword.ComputeSha256Hash(password);
+			//input new password
 			string newPassword = HashPassword.ComputeSha256Hash(form["newpassword"]);
+			//if user exists
 			if(user != null)
 			{
+				//get student
 				Student student = db.Students.FirstOrDefault(s => s.Id == user.StudentId);
+				//type old password fail
 				if(hashedPassword != user.Password)
 				{
 					Response.Write("<script>alert('Mật khẩu cũ không đúng. Vui lòng kiểm tra lại')</script>");
 					return View(student);
 				}
+				//rewrite new password fail
 				else if(form["newpassword"].ToString().Trim() != form["repassword"].ToString().Trim())
 				{
 					Response.Write("<script>alert('Mật khẩu mới không trùng nhau. Vui lòng kiểm tra lại')</script>");
 					return View(student);
 				}
+				//get user
 				User u = db.Users.FirstOrDefault(us => us.Username == user.Username);
 				u.Password = newPassword;
 				student.Password = newPassword;
@@ -81,14 +91,14 @@ namespace ClassSurvey.Areas.Member.Controllers
 			return RedirectToAction("Index", "Authentication", new { area = "Authentication" });
 		}
 
-		//lay ra danh sach lop ma sinh vien tham gia
+		//get classes student participating in
 		public ActionResult ShowListClass()
 		{
-			//lay ra session cua user
+			//get user
 			User user = Session["User"] as User;
 			if(user != null)
 			{
-				//lay danh sach lop sinh vien tham gia thong qua bang studentclass
+				//get classes
 				List<StudentClass> listClasses = db.Students.FirstOrDefault(s => s.Id == user.StudentId)
 					.StudentClasses.ToList();
 				return View(listClasses);
@@ -96,52 +106,54 @@ namespace ClassSurvey.Areas.Member.Controllers
 			return RedirectToAction("Home", "Authentication", new { area = "Authentication" });
 		}
 
-		//Thuc hien khao sat mon hoc
+		//Do Survey
 		public ActionResult DoSurvey (int? id, int? studentId)
 		{
-			//neu ko ton tai id va studentId
+			//if id or studentID not exists
 			if(id == null || studentId == null)
 			{
-				//tra ve trang bao loi
+				//return 404
 				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 
-			//lay ra sinh vien co studentId va classId, chi tiet ve mon hoc va sinh vien do
+			//get student with id and studentid
 			StudentClass studentClass = db.StudentClasses.FirstOrDefault(x => x.StudentId == studentId && x.ClassId == id);
+			//not found student
 			if(studentClass == null)
 			{
 				return RedirectToAction("Page404", "Authentication", new { area = "Authentication" });
 			}
 
-			//kiem tra xem sinh vien da lam khao sat chua
+			//check if student has survey or not
 			if(db.Surveys.Any(s => s.StudentClassId == studentClass.Id))
 			{
 				ViewBag.Message = "Môn học này đã được đánh giá. Cảm ơn bạn đã ghé thăm";
 				return View(studentClass);
 			}
 
-			//tong so cau hoi trong bai khao sat
+			//number of criteria in survey table
 			ViewBag.CountQuestion = db.SurveyQuestions.ToList().Count();
 
-			//danh sach cau hoi trong bai khao sat
+			//list criteria in the survey
 			ViewBag.SurveyQuestions = db.SurveyQuestions.Select(sq => sq.Content).ToList();
 			return View(studentClass);
 		}
 
-		//ham xu ly khi sinh vien post dap an cho bai khao sat
+		//post survey form
 		[HttpPost]
 		public ActionResult DoSurvey(FormCollection form)
 		{
-			//tong so cau hoi trong bai khao sat
+			//number of criteria in survey table
 			ViewBag.CountQuestion = db.SurveyQuestions.ToList().Count();
-			//danh sach cau hoi trong bai khao sat
+			//list criteria in the survey
 			ViewBag.SurveyQuestions = db.SurveyQuestions.Select(sq => sq.Content).ToList();
-			//lay ra id lop tu form co name = classId
+			//get class id from form has name = classId
 			int classId = int.Parse(form["classId"]);
-			//lay ra id cua student tu form co name = studentId
+			//get studentId from form
 			int studentId = int.Parse(form["studentdetailId"]);
-			//lay ra sinh vien trong lop co classId = classId lay ra tu form
+			//get student
 			StudentClass studentClass = db.StudentClasses.FirstOrDefault(sc => sc.ClassId == classId);
+			//check if all criteria have result
 			if(form.Count < db.SurveyQuestions.ToList().Count() + 2)
 			{
 				ViewBag.Message = "Bạn cần phải hoàn thiện việc đánh giá tất cả các tiêu chí trước khi submit";

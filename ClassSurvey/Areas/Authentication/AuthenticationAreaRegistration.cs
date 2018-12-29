@@ -2,6 +2,7 @@
 
 namespace ClassSurvey.Areas.Authentication
 {
+	//RouteConfig for Authentication Page
     public class AuthenticationAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
